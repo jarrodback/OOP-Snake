@@ -69,7 +69,7 @@ vector<vector<char>> Game::prepare_grid()
    return grid;
 }
 
-int Game::find_hole_number_at_position(int x, int y)
+int Game::find_hole_number_at_position(int x, int y) const
 {
    for (size_t h_no = 0; h_no < underground.holes.size(); ++h_no)
    {
@@ -97,7 +97,7 @@ void Game::apply_rules()
    }
 }
 
-bool Game::is_running()
+bool Game::is_running() const
 {
    return mouse.is_alive() && !mouse.has_escaped();
 }
