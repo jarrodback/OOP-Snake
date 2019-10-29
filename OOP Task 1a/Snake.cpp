@@ -17,6 +17,9 @@ Snake::~Snake()
 {
 
 }
+int Snake::getX() const{return x;}
+int Snake::getY() const{return y;}
+char Snake::getSymbol() const{return symbol;}
 
 bool Snake::is_at_position(int x, int y)
 {
@@ -76,7 +79,6 @@ void Snake::update_position(int dx, int dy)
 void Snake::position_at_random()
 {
 	// WARNING: this may place on top of other things
-
 	x = rng.get_random_value(SIZE);
 	y = rng.get_random_value(SIZE);
 }

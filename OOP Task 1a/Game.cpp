@@ -36,9 +36,9 @@ vector<vector<char>> Game::prepare_grid()
       for (int col = 1; col <= SIZE; ++col)
       {
          // is the snake at this position?
-         if (row == snake.y && col == snake.x)
+         if (row == snake.getY() && col == snake.getX())
          {
-            line.push_back(snake.symbol);
+            line.push_back(snake.getSymbol());
          }
          // is the mouse at this position?
          else if (row == mouse.get_y() && col == mouse.get_x())
