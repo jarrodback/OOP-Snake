@@ -4,6 +4,7 @@
 #include "RandomNumberGenerator.h"
 
 Snake::Snake()
+//calls default
 {
 	symbol = SNAKEHEAD;
 	position_at_random();
@@ -24,7 +25,7 @@ bool Snake::is_at_position(int x, int y)
 
 bool Snake::has_caught_mouse()
 {
-	return is_at_position(p_mouse->x, p_mouse->y);
+	return is_at_position(p_mouse->get_x(), p_mouse->get_y());
 }
 
 void Snake::spot_mouse(Mouse* p_mouse)
