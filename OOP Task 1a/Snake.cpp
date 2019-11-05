@@ -5,10 +5,9 @@
 
 RandomNumberGenerator Snake::rng;
 
-Snake::Snake()
+Snake::Snake() : symbol(SNAKEHEAD)
 //calls default
 {
-	symbol = SNAKEHEAD;
 	position_at_random();
 
 	// make the pointer safe before the snake spots the mouse
@@ -23,12 +22,12 @@ int Snake::getX() const{return x;}
 int Snake::getY() const{return y;}
 char Snake::getSymbol() const{return symbol;}
 
-bool Snake::is_at_position(int x, int y)
+bool Snake::is_at_position(int x, int y) const
 {
 	return (this->x == x) && (this->y == y);
 }
 
-bool Snake::has_caught_mouse()
+bool Snake::has_caught_mouse() const
 {
 	return is_at_position(p_mouse->get_x(), p_mouse->get_y());
 }
@@ -52,7 +51,7 @@ void Snake::chase_mouse()
 	update_position(snake_dx, snake_dy);
 }
 
-void Snake::set_direction(int& dx, int& dy)
+void Snake::set_direction(int& dx, int& dy) const
 {
 	// pre-condition: The snake needs to know where the mouse is 
 	assert(p_mouse != nullptr);

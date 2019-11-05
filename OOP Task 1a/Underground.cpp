@@ -4,19 +4,18 @@ Hole::Hole()
 {
 }
 
-Hole::Hole(int x, int y)
+Hole::Hole(int x, int y) : symbol(HOLE)
 {
-	symbol = HOLE;
 	this->x = x;
 	this->y = y;
 }
 
-int Hole::get_x()
+int Hole::get_x() const
 {
 	return x;
 }
 
-int Hole::get_y()
+int Hole::get_y() const
 {
 	return y;
 }
@@ -64,4 +63,9 @@ void Underground::set_hole_no_at_position(int no, int x, int y)
 bool Underground::is_valid_hole_number(int no) const
 {
 	return no >= 0 && no < (int)holes.size();
+}
+
+vector<Hole> Underground::getHoles() const
+{
+	return holes;
 }

@@ -71,7 +71,7 @@ vector<vector<char>> Game::prepare_grid()
 
 int Game::find_hole_number_at_position(int x, int y) const
 {
-   for (size_t h_no = 0; h_no < underground.holes.size(); ++h_no)
+   for (size_t h_no = 0; h_no < underground.getHoles().size(); ++h_no)
    {
       if (underground.get_hole_no(h_no).is_at_position(x, y))
       {
@@ -102,7 +102,7 @@ bool Game::is_running() const
    return mouse.is_alive() && !mouse.has_escaped();
 }
 
-string Game::get_end_reason()
+string Game::get_end_reason() const
 {
    if (mouse.has_escaped())
       return "You escaped underground!";

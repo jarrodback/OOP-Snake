@@ -17,12 +17,13 @@ private:
 	Snake snake;
 	Underground underground;
 
- public:
-      void set_up();
-      void process_input(int key);
-      vector<vector<char>> prepare_grid();
-      void apply_rules();
-      bool is_running() const;
-      int find_hole_number_at_position(int x, int y) const;
-      string get_end_reason();
+	void apply_rules();
+	int find_hole_number_at_position(int x, int y) const;
+
+public:
+	void set_up();
+	void process_input(int key);
+	vector<vector<char>> prepare_grid();
+	bool is_running() const;
+	string get_end_reason() const;
 };
