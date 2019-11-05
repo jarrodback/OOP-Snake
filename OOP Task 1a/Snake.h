@@ -7,7 +7,13 @@ class Snake {
 private:
 	char symbol;
 	int x, y;
-	RandomNumberGenerator rng;
+	static RandomNumberGenerator rng;
+	Mouse* p_mouse;
+
+	void set_direction(int& dx, int& dy);
+	void update_position(int dx, int dy);
+	bool is_at_position(int x, int y);
+
 	public:
 		Snake();
         ~Snake();
@@ -15,14 +21,10 @@ private:
 		int getX() const;
 		int getY() const;
 		char getSymbol() const;
-
-		bool is_at_position(int x, int y);  
-		bool has_caught_mouse() ;
-		void spot_mouse(Mouse* p_mouse);
+		//Setters
+		void spot_mouse(Mouse* p_mouse); //sets mouse pointer
+		//Logic
+		bool has_caught_mouse();
 		void chase_mouse();
-		void set_direction(int& dx, int& dy);
 		void position_at_random();
-		void update_position(int dx, int dy);
-
-		Mouse* p_mouse;
 };

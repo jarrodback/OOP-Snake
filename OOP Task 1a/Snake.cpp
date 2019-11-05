@@ -3,6 +3,8 @@
 #include "Mouse.h"
 #include "RandomNumberGenerator.h"
 
+RandomNumberGenerator Snake::rng;
+
 Snake::Snake()
 //calls default
 {
