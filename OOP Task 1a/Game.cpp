@@ -40,6 +40,7 @@ vector<vector<char>> Game::prepare_grid()
          {
             line.push_back(snake.getSymbol());
          }
+		 
          // is the mouse at this position?
          else if (row == mouse.get_y() && col == mouse.get_x())
          {
