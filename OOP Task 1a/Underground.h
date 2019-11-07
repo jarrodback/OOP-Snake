@@ -20,7 +20,7 @@ public:
 	int get_x() const;
 	int get_y() const;
 	char get_symbol() const;
-	bool is_at_position(int x, int y);
+	bool is_at_position(int x, int y) const;
 
 };
 

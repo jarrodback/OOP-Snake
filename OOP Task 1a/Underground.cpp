@@ -25,7 +25,7 @@ char Hole::get_symbol() const
 	return symbol;
 }
 
-bool Hole::is_at_position(int x, int y)
+bool Hole::is_at_position(int x, int y) const
 {
 	return this->x == x && this->y == y;
 }
