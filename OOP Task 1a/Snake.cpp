@@ -48,7 +48,7 @@ void Snake::chase_mouse()
 	set_direction(snake_dx, snake_dy);
 
 	//go in that direction
-	update_position(snake_dx, snake_dy);
+	//update_position(snake_dx, snake_dy);
 }
 
 void Snake::set_direction(int& dx, int& dy) const

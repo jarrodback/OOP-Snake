@@ -6,20 +6,22 @@ Nut::Nut() : symbol(NUT)
 }
 
 Nut::Nut(int x, int y)
-	: x(x), y(y), symbol(NUT), collected(true)
+	: x(x), y(y), symbol(NUT), collected(false)
 {
 
 }
 void Nut::positionNut() { x = 10; y = 5; }
-int Nut::get_x() const { return x; }
-int Nut::get_y() const { return y; }
+void Nut::disappear()
+{
+	collected = true;
+	symbol = FREECELL;
+}
+int Nut::getX() const { return x; }
+int Nut::getY() const { return y; }
 char Nut::get_symbol() const { return symbol; }
 bool Nut::has_been_collected() { return collected; }
-bool Nut::is_at_position(int x, int y) { return is_at_position(get_x(), get_y()); }
-void Nut::disappear() {
-	if (mouse1->get_x() == get_x() && mouse1->get_y() == get_y())
-	{
-		get_symbol() == FREECELL;
-	}
+bool Nut::is_at_position(int x, int y) 
+{ 
+	return is_at_position(getX(), getY()); 
 }
 

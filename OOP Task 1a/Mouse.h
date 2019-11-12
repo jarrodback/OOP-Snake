@@ -2,7 +2,7 @@
 
 #include "constants.h"
 #include "Underground.h"
-
+#include "Nut.h"
 class Mouse
 {
 private:
@@ -26,6 +26,7 @@ public:
 	bool is_alive() const;
 	bool has_escaped() const;
 	bool has_reached_a_hole(Underground ug) const;
+	bool has_reached_nut(Nut nut) const;
 	// mutators
 	void die();
 	void escape_into_hole();

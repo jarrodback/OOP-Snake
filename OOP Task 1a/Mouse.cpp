@@ -24,7 +24,11 @@ bool Mouse::has_reached_a_hole(Underground ug) const
 
 	return false;
 }
-
+bool Mouse::has_reached_nut(Nut nut) const
+{
+	if(is_at_position(nut.getX(), nut.getY()))
+		return true;
+}
 void Mouse::die()
 {
 	alive = false;
