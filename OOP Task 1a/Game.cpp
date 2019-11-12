@@ -1,5 +1,7 @@
 #include "Game.h"
-
+Game::Game() : nut(10,5)
+{
+}
 void Game::set_up()
 {
 	// set up the holes
@@ -12,9 +14,6 @@ void Game::set_up()
 	// set up snake
 	snake.position_at_random();
 	snake.spot_mouse(&mouse);
-
-	// set up Nut
-	nut.positionNut();
 }
 
 void Game::process_input(int key)
@@ -38,9 +37,9 @@ vector<vector<char>> Game::prepare_grid()
       // for each column
       for (int col = 1; col <= SIZE; ++col)
       {
-		  if(row == nut.get_y() && col == nut.get_x())
+		  if(row == nut.getY() && col == nut.getX() && !nut.has_been_collected())
 		  {
-			  line.push_back(nut.get_symbol());
+			  line.push_back(nut.getSymbol());
 		  }
          // is the snake at this position?
          else if (row == snake.getY() && col == snake.getX())
