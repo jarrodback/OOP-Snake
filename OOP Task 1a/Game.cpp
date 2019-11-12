@@ -35,31 +35,42 @@ vector<vector<char>> Game::prepare_grid()
       // for each column
       for (int col = 1; col <= SIZE; ++col)
       {
-         // is the snake at this position?
-         if (row == snake.getY() && col == snake.getX())
-         {
-            line.push_back(snake.getSymbol());
-         }
-         // is the mouse at this position?
-         else if (row == mouse.getY() && col == mouse.getX())
-         {
-            line.push_back(mouse.getSymbol());
-         }
-         else
-         {
-            // is there a hole at this position?
-            const int hole_no = find_hole_number_at_position(col, row);
+		  bool tailFound = false;
+		  for (Snake::BodyPart i : snake.getSnake())
+		  {
+			 if (i.symbol == SNAKETAIL && row == i.y && col == i.x)
+			  {
+				  line.push_back(SNAKETAIL);
+				  tailFound = true;
+			  }
+		  }
+		  if (!tailFound)
+		  {
+			  // is the snake at this position?
+			  if (row == snake.getY() && col == snake.getX())
+			  {
+				  line.push_back(snake.getSymbol());
+			  }
+			  // is the mouse at this position?
+			  else if (row == mouse.get_y() && col == mouse.get_x())
+			  {
+				  line.push_back(mouse.get_symbol());
+			  }
+			  else
+			  {
+				  // is there a hole at this position?
+				  const int hole_no = find_hole_number_at_position(col, row);
 
-            if (hole_no != -1)
-            {
-               line.push_back(underground.get_hole_no(hole_no).getSymbol());
-            }
-            else
-            {
-               // none of the above, must be nothing at this position
-               line.push_back(FREECELL);
-            }
-         }
+				  if (hole_no != -1)
+				  {
+					  line.push_back(underground.get_hole_no(hole_no).get_symbol());
+				  }
+				  else
+				  {
+					  // none of the above, must be nothing at this position
+					  line.push_back(FREECELL);
+				  }
+			  }
       }
 
       // now that the row is full, add it to the 2D grid
