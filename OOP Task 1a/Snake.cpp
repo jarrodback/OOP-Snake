@@ -20,6 +20,10 @@ Snake::~Snake()
 }
 int Snake::getX() const { return snakeHead.x; }
 int Snake::getY() const { return snakeHead.y; }
+vector<Snake::BodyPart> Snake::getSnake() const
+{
+	return snake;
+}
 char Snake::getSymbol() const { return snakeHead.symbol; }
 
 bool Snake::is_at_position(int x, int y) const
@@ -88,10 +92,10 @@ void Snake::set_direction(int& dx, int& dy) const
 
 void Snake::update_position(int dx, int dy)
 {
+	move_tail();
 	snakeHead.x += dx;
 	snakeHead.y += dy;
 	snake[0] = snakeHead;
-	move_tail();
 }
 void Snake::move_tail()
 {

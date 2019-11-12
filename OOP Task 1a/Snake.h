@@ -4,7 +4,7 @@
 #include "RandomNumberGenerator.h"
 
 class Snake {
-private:
+public:
 	struct BodyPart {
 	public:
 		Snake::BodyPart::BodyPart(int x, int y, char symbol) : x(x), y(y), symbol(symbol)
@@ -15,6 +15,7 @@ private:
 		int x, y;
 		char symbol;
 	};
+private:
 	vector<BodyPart> snake;
 	BodyPart snakeHead;
 	//const char symbol;
@@ -34,6 +35,7 @@ public:
 	//Getters
 	int getX() const;
 	int getY() const;
+	vector<BodyPart> getSnake() const;
 	char getSymbol() const;
 	//Setters
 	void spot_mouse(Mouse* p_mouse); //sets mouse pointer
