@@ -36,10 +36,10 @@ int main()
 			{
 				int xPosition = x * cellSize;
 				int yPosition = y * cellSize;
-
 				switch (grid[y][x])
 				{
 					case HOLE:       DrawRectangle(xPosition, yPosition, cellSize, cellSize, BLACK);     break;
+					case NUT:       DrawRectangle(xPosition, yPosition, cellSize, cellSize, BROWN);     break;
 					case SNAKEHEAD:  DrawRectangle(xPosition, yPosition, cellSize, cellSize, RED);       break;
 					case MOUSE:      DrawRectangle(xPosition, yPosition, cellSize, cellSize, GREEN);     break;
 					case FREECELL:   DrawRectangle(xPosition, yPosition, cellSize, cellSize, DARKGREEN); break;

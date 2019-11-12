@@ -12,6 +12,9 @@ void Game::set_up()
    // set up snake
    snake.position_at_random();
    snake.spot_mouse(&mouse);
+
+   // set up Nut
+   nut.positionNut();
 }
 
 void Game::process_input(int key)
@@ -35,8 +38,12 @@ vector<vector<char>> Game::prepare_grid()
       // for each column
       for (int col = 1; col <= SIZE; ++col)
       {
+		  if(row == nut.get_y() && col == nut.get_x())
+		  {
+			  line.push_back(nut.get_symbol());
+		  }
          // is the snake at this position?
-         if (row == snake.getY() && col == snake.getX())
+         else if (row == snake.getY() && col == snake.getX())
          {
             line.push_back(snake.getSymbol());
          }
@@ -90,7 +97,11 @@ void Game::apply_rules()
    }
    else
    {
-      if (mouse.has_reached_a_hole(underground))
+	   if (nut.has_been_collected())
+	   {
+		   nut.disappear();
+	   }
+      if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == true)
       {
          mouse.escape_into_hole();
       }

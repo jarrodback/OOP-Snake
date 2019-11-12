@@ -8,6 +8,7 @@
 #define MOUSE     'M'
 #define HOLE      'H'
 #define FREECELL  '.'
+#define NUT       'N'
 
 // the command letters to move the mouse on the maze
 #define KEY_RIGHT 262
