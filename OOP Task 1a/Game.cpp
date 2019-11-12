@@ -37,35 +37,50 @@ vector<vector<char>> Game::prepare_grid()
       // for each column
       for (int col = 1; col <= SIZE; ++col)
       {
-		  if(row == nut.getY() && col == nut.getX() && !nut.has_been_collected())
+		  bool tailFound = false;
+		  int count = 0;
+		  for (MoveableGridItem snakePart : snake.getSnake())
 		  {
-			  line.push_back(nut.getSymbol());
+			  if (row == snakePart.getY() && col == snakePart.getX() && count>0)
+			  {
+				  line.push_back(snakePart.getSymbol());
+				  tailFound = true;
+			  }
+			  count++;
 		  }
-         // is the snake at this position?
-         else if (row == snake.getY() && col == snake.getX())
-         {
-            line.push_back(snake.getSymbol());
-         }
-         // is the mouse at this position?
-         else if (row == mouse.getY() && col == mouse.getX())
-         {
-            line.push_back(mouse.getSymbol());
-         }
-         else
-         {
-            // is there a hole at this position?
-            const int hole_no = find_hole_number_at_position(col, row);
+		  if (!tailFound)
+		  {
+			  // is the nut at this position?
+			  if (row == nut.getY() && col == nut.getX() && !nut.has_been_collected())
+			  {
+				  line.push_back(nut.getSymbol());
+			  }
+			  // is the snake at this position?
+			  else if (row == snake.getSnake().at(0).getY() && col == snake.getSnake().at(0).getX())
+			  {
+				  line.push_back(snake.getSnake().at(0).getSymbol());
+			  }
+			  // is the mouse at this position?
+			  else if (row == mouse.getY() && col == mouse.getX())
+			  {
+				  line.push_back(mouse.getSymbol());
+			  }
+			  else
+			  {
+				  // is there a hole at this position?
+				  const int hole_no = find_hole_number_at_position(col, row);
 
-            if (hole_no != -1)
-            {
-               line.push_back(underground.get_hole_no(hole_no).getSymbol());
-            }
-            else
-            {
-               // none of the above, must be nothing at this position
-               line.push_back(FREECELL);
-            }
-         }
+				  if (hole_no != -1)
+				  {
+					  line.push_back(underground.get_hole_no(hole_no).getSymbol());
+				  }
+				  else
+				  {
+					  // none of the above, must be nothing at this position
+					  line.push_back(FREECELL);
+				  }
+			  }
+		  }
       }
 
       // now that the row is full, add it to the 2D grid

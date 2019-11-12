@@ -5,21 +5,31 @@
 
 RandomNumberGenerator Snake::rng;
 
-Snake::Snake() : MoveableGridItem(SNAKEHEAD)
+Snake::Snake()
 //calls default
 {
 	//symbol = SNAKEHEAD;
+	snakeBody.push_back(MoveableGridItem(SNAKEHEAD));
 	position_at_random();
+	createSnake();
 	// make the pointer safe before the snake spots the mouse
 	p_mouse = nullptr;
+
 }
 Snake::~Snake()
 {
 
 }
+vector<MoveableGridItem> Snake::getSnake()
+{
+	return snakeBody;
+}
 bool Snake::has_caught_mouse() const
 {
-	return is_at_position(p_mouse->getX(), p_mouse->getY());
+	for (MoveableGridItem snakePart : snakeBody)
+		if (snakePart.is_at_position(p_mouse->getX(), p_mouse->getY()))
+			return true;
+	return false;
 }
 
 void Snake::spot_mouse(Mouse* p_mouse)
@@ -38,7 +48,12 @@ void Snake::chase_mouse()
 	set_direction(snake_dx, snake_dy);
 
 	//go in that direction
-	//update_position(snake_dx, snake_dy);
+	for (int x = snakeBody.size() -1; x > 0; x--)
+	{
+		snakeBody.at(x).SetX(snakeBody.at(x - 1).getX());
+		snakeBody.at(x).SetY(snakeBody.at(x - 1).getY());
+	}
+	snakeBody.at(0).update_position(snake_dx, snake_dy);
 }
 
 void Snake::set_direction(int& dx, int& dy) const
@@ -50,19 +65,28 @@ void Snake::set_direction(int& dx, int& dy) const
 	dx = 0; dy = 0;
 
 	// update coordinate if necessary
-	if (x < p_mouse->getX())         // if snake on left of mouse
+	if (snakeBody.at(0).getX() < p_mouse->getX())         // if snake on left of mouse
 		dx = 1;                        // snake should move right
-	else if (x > p_mouse->getX())    // if snake on left of mouse
+	else if (snakeBody.at(0).getX() > p_mouse->getX())    // if snake on left of mouse
 		dx = -1;						       // snake should move left
 
-	if (y < p_mouse->getY())         // if snake is above mouse
+	if (snakeBody.at(0).getY() < p_mouse->getY())         // if snake is above mouse
 		dy = 1;                        // snake should move down
-	else if (y > p_mouse->getY())    // if snake is below mouse
+	else if (snakeBody.at(0).getY() > p_mouse->getY())    // if snake is below mouse
 		dy = -1;						       // snake should move up
+}
+void Snake::createSnake()
+{
+	for (int x = 0; x < 3; x++)
+	{
+		snakeBody.push_back(MoveableGridItem(SNAKETAIL));
+	}
 }
 void Snake::position_at_random()
 {
 	// WARNING: this may place on top of other things
-	x = rng.get_random_value(SIZE);
-	y = rng.get_random_value(SIZE);
+	int x = rng.get_random_value(SIZE);
+	int y = rng.get_random_value(SIZE);
+	snakeBody.at(0).SetX(x);
+	snakeBody.at(0).SetY(y);
 }
