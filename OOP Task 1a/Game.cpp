@@ -41,9 +41,9 @@ vector<vector<char>> Game::prepare_grid()
             line.push_back(snake.getSymbol());
          }
          // is the mouse at this position?
-         else if (row == mouse.get_y() && col == mouse.get_x())
+         else if (row == mouse.getY() && col == mouse.getX())
          {
-            line.push_back(mouse.get_symbol());
+            line.push_back(mouse.getSymbol());
          }
          else
          {
@@ -52,7 +52,7 @@ vector<vector<char>> Game::prepare_grid()
 
             if (hole_no != -1)
             {
-               line.push_back(underground.get_hole_no(hole_no).get_symbol());
+               line.push_back(underground.get_hole_no(hole_no).getSymbol());
             }
             else
             {
