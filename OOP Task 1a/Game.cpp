@@ -26,54 +26,54 @@ void Game::process_input(int key)
 
 vector<vector<char>> Game::prepare_grid()
 {
-	// create the 2D grid
-	vector<vector<char>> grid;
+   // create the 2D grid
+   vector<vector<char>> grid;
 
-	// for each row
-	for (int row = 1; row <= SIZE; ++row)
-	{
-		// create a row to add to the 2D grid
-		vector<char> line;
+   // for each row
+   for (int row = 1; row <= SIZE; ++row)
+   {
+      // create a row to add to the 2D grid
+      vector<char> line;
 
-		// for each column
-		for (int col = 1; col <= SIZE; ++col)
-		{
-			if (row == nut.getY() && col == nut.getX())
-			{
-				line.push_back(nut.get_symbol());
-			}
-			// is the snake at this position?
-			else if (row == snake.getY() && col == snake.getX())
-			{
-				line.push_back(snake.getSymbol());
-			}
-			// is the mouse at this position?
-			else if (row == mouse.get_y() && col == mouse.get_x())
-			{
-				line.push_back(mouse.get_symbol());
-			}
-			else
-			{
-				// is there a hole at this position?
-				const int hole_no = find_hole_number_at_position(col, row);
+      // for each column
+      for (int col = 1; col <= SIZE; ++col)
+      {
+		  if(row == nut.get_y() && col == nut.get_x())
+		  {
+			  line.push_back(nut.get_symbol());
+		  }
+         // is the snake at this position?
+         else if (row == snake.getY() && col == snake.getX())
+         {
+            line.push_back(snake.getSymbol());
+         }
+         // is the mouse at this position?
+         else if (row == mouse.getY() && col == mouse.getX())
+         {
+            line.push_back(mouse.getSymbol());
+         }
+         else
+         {
+            // is there a hole at this position?
+            const int hole_no = find_hole_number_at_position(col, row);
 
-				if (hole_no != -1)
-				{
-					line.push_back(underground.get_hole_no(hole_no).get_symbol());
-				}
-				else
-				{
-					// none of the above, must be nothing at this position
-					line.push_back(FREECELL);
-				}
-			}
-		}
+            if (hole_no != -1)
+            {
+               line.push_back(underground.get_hole_no(hole_no).getSymbol());
+            }
+            else
+            {
+               // none of the above, must be nothing at this position
+               line.push_back(FREECELL);
+            }
+         }
+      }
 
-		// now that the row is full, add it to the 2D grid
-		grid.push_back(line);
-	}
+      // now that the row is full, add it to the 2D grid
+      grid.push_back(line);
+   }
 
-	return grid;
+   return grid;
 }
 
 int Game::find_hole_number_at_position(int x, int y) const
