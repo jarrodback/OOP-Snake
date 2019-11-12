@@ -1,27 +1,18 @@
 #pragma once
 
+#include "FixedGridItem.h"
 #include <cassert>
 #include <vector>
 #include "constants.h"
 
 using namespace std;
 
-class Hole
+class Hole : public FixedGridItem
 {
-private:
-	// data members
-	char symbol;
-	int x, y;
 public:
-	// constructors
 	Hole();
+	// constructors
 	Hole(int x, int y);
-	// assessors
-	int get_x() const;
-	int get_y() const;
-	char get_symbol() const;
-	bool is_at_position(int x, int y) const;
-
 };
 
 class Underground

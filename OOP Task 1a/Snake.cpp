@@ -4,16 +4,15 @@
 #include "RandomNumberGenerator.h"
 RandomNumberGenerator Snake::rng;
 
-Snake::Snake()
+Snake::Snake() : MoveableGridItem(SNAKEHEAD)
 //calls default
 {
-	createSnake();
+  createSnake();
+	//symbol = SNAKEHEAD;
 	position_at_random();
-
 	// make the pointer safe before the snake spots the mouse
 	p_mouse = nullptr;
 }
-
 Snake::~Snake()
 {
 

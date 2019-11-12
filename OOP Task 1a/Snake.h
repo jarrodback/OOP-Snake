@@ -1,9 +1,8 @@
 #pragma once
-
+#include "MoveableGridItem.h"
 #include "Mouse.h"
 #include "RandomNumberGenerator.h"
-
-class Snake {
+class Snake : public MoveableGridItem{
 public:
 	struct BodyPart {
 	public:
@@ -18,29 +17,19 @@ public:
 private:
 	vector<BodyPart> snake;
 	BodyPart snakeHead;
-	//const char symbol;
-	//int x, y;
 	static RandomNumberGenerator rng;
 	Mouse* p_mouse;
-
-	void createSnake();
 	void set_direction(int& dx, int& dy) const;
-	void update_position(int dx, int dy);
-	void move_tail();
-	bool is_at_position(int x, int y) const;
-
+  	void move_tail();
+    void createSnake();
 public:
-	Snake();
-	~Snake();
-	//Getters
-	int getX() const;
-	int getY() const;
-	vector<BodyPart> getSnake() const;
-	char getSymbol() const;
-	//Setters
-	void spot_mouse(Mouse* p_mouse); //sets mouse pointer
-	//Logic
-	bool has_caught_mouse() const;
-	void chase_mouse();
-	void position_at_random();
+		Snake();
+        ~Snake();
+        	vector<BodyPart> getSnake() const;
+		//Setters
+		void spot_mouse(Mouse* p_mouse); //sets mouse pointer
+		//Logic
+		bool has_caught_mouse() const;
+		void chase_mouse();
+		void position_at_random();
 };

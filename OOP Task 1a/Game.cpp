@@ -71,7 +71,6 @@ vector<vector<char>> Game::prepare_grid()
 					  line.push_back(FREECELL);
 				  }
 			  }
-		  }
       }
 
       // now that the row is full, add it to the 2D grid
