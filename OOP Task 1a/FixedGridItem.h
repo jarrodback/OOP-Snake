@@ -11,3 +11,5 @@ public:
 	int getY() const;
 	bool is_at_position(int x, int y) const;
 };
+
+
