@@ -1,7 +1,7 @@
 #include "Nut.h"
 #include "Constants.h"
 
-Nut::Nut()
+Nut::Nut() : symbol(NUT)
 {
 }
 
