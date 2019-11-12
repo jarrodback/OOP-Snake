@@ -1,39 +1,17 @@
 #include "Underground.h"
 
-Hole::Hole()
+Hole::Hole() : FixedGridItem(HOLE)
 {
-}
 
-Hole::Hole(int x, int y) : symbol(HOLE)
-{
-	this->x = x;
-	this->y = y;
 }
-
-int Hole::get_x() const
+Hole::Hole(int x, int y) : FixedGridItem(HOLE, x, y)
 {
-	return x;
-}
-
-int Hole::get_y() const
-{
-	return y;
-}
-
-char Hole::get_symbol() const
-{
-	return symbol;
-}
-
-bool Hole::is_at_position(int x, int y) const
-{
-	return this->x == x && this->y == y;
 }
 
 // number of holes in underground
 static const int MAXHOLES(3);
 
-Underground::Underground() : holes(MAXHOLES)
+Underground::Underground() :  holes(MAXHOLES)
 {
 }
 
@@ -49,15 +27,7 @@ void Underground::set_hole_no_at_position(int no, int x, int y)
 {
 	// pre-condition: valid hole number
 	assert(is_valid_hole_number(no));
-
-	Hole h(x, y);
-
-	switch (no)
-	{
-		case 0: holes.at(0) = h; break;
-		case 1: holes.at(1) = h; break;
-		case 2: holes.at(2) = h; break;
-	}
+	holes.push_back(Hole(x, y));
 }
 
 bool Underground::is_valid_hole_number(int no) const
