@@ -107,6 +107,7 @@ void Game::apply_rules()
 {
 	if (snake.has_caught_mouse())
 	{
+		player.updateScore(player.getScore() - 1);
 		mouse.die();
 	}
 	else
@@ -117,6 +118,7 @@ void Game::apply_rules()
 		}
 		if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == true)
 		{
+			player.updateScore(player.getScore() + 1);
 			mouse.escape_into_hole();
 		}
 	}
@@ -141,4 +143,20 @@ string Game::getPlayerName() const {
 
 int Game::getPlayerScore() const {
 	return player.getScore();
+}
+
+void Game::readFile() {
+	ifstream fin;
+	int score;
+	fin.open(player.getName());
+	fin >> score;
+	player.updateScore(score);
+	fin.close();
+}
+
+void Game::writeFile() {
+	ofstream fout;
+	fout.open(player.getName(), ios::app);
+	fout << player.getScore();
+	fout.close();
 }

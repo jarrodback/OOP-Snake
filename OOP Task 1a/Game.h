@@ -3,6 +3,7 @@
 #include <string>		
 #include <assert.h>	
 #include <vector>
+#include <fstream>
 
 #include "Mouse.h"
 #include "Snake.h"
@@ -33,4 +34,6 @@ public:
 	string get_end_reason() const;
 	string getPlayerName() const;
 	int getPlayerScore() const;
+	void readFile();
+	void writeFile();
 };
