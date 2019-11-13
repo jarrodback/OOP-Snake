@@ -1,5 +1,5 @@
 #include "Game.h"
-Game::Game() : nut(10,5)
+Game::Game(string name) : nut(10,5), player(name)
 {
 }
 void Game::set_up()

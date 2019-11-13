@@ -10,7 +10,7 @@ private:
 	const string name;
 	Score score;
 public:
-	Player();
+	Player(string name);
 	//Query
 	string getName() const;
 	int getScore() const;

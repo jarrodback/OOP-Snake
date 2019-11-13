@@ -25,7 +25,7 @@ private:
 	int find_hole_number_at_position(int x, int y) const;
 
 public:
-	Game();
+	Game(string name);
 	void set_up();
 	void process_input(int key);
 	vector<vector<char>> prepare_grid();
