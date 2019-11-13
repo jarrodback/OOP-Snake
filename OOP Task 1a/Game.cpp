@@ -134,3 +134,11 @@ string Game::get_end_reason() const
 
 	return "The snake ate you!";
 }
+
+string Game::getPlayerName() const {
+	return player.getName();
+}
+
+int Game::getPlayerScore() const {
+	return player.getScore();
+}

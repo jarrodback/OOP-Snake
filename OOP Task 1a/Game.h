@@ -8,6 +8,7 @@
 #include "Snake.h"
 #include "Underground.h"
 #include "Nut.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ private:
 	Snake snake;
 	Underground underground;
 	Nut nut;
+	Player player;
 
 	void apply_rules();
 	int find_hole_number_at_position(int x, int y) const;
@@ -29,4 +31,6 @@ public:
 	vector<vector<char>> prepare_grid();
 	bool is_running() const;
 	string get_end_reason() const;
+	string getPlayerName() const;
+	int getPlayerScore() const;
 };

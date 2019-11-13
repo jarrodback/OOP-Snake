@@ -13,6 +13,8 @@ int main()
 	{
 		BeginDrawing();
 		ClearBackground(DARKGRAY);
+		DrawText(("Player Name: " + game.getPlayerName()).c_str(), 610, 10, 20, LIGHTGRAY);
+		DrawText(("Score: " + to_string(game.getPlayerScore())).c_str(), 610, 40, 20, LIGHTGRAY);
 
 		if (game.is_running())
 		{
@@ -23,7 +25,7 @@ int main()
 		}
 		else
 		{
-			DrawText(game.get_end_reason().c_str(), 610, 10, 20, LIGHTGRAY);
+			DrawText(game.get_end_reason().c_str(), 610, 70, 20, LIGHTGRAY);
 		}
 
 		const int cellSize = (int)((float)GetScreenHeight() / (float)(SIZE));
