@@ -8,13 +8,10 @@ RandomNumberGenerator Snake::rng;
 Snake::Snake()
 //calls default
 {
-	//symbol = SNAKEHEAD;
-	snakeBody.push_back(MoveableGridItem(SNAKEHEAD));
-	position_at_random();
 	createSnake();
+	position_at_random();
 	// make the pointer safe before the snake spots the mouse
 	p_mouse = nullptr;
-
 }
 Snake::~Snake()
 {
@@ -56,6 +53,11 @@ void Snake::chase_mouse()
 	snakeBody.at(0).update_position(snake_dx, snake_dy);
 }
 
+void Snake::resetSnake() {
+	snakeBody.clear();
+	createSnake();
+}
+
 void Snake::set_direction(int& dx, int& dy) const
 {
 	// pre-condition: The snake needs to know where the mouse is 
@@ -77,6 +79,7 @@ void Snake::set_direction(int& dx, int& dy) const
 }
 void Snake::createSnake()
 {
+	snakeBody.push_back(MoveableGridItem(SNAKEHEAD));
 	for (int x = 0; x < 3; x++)
 	{
 		snakeBody.push_back(MoveableGridItem(SNAKETAIL));

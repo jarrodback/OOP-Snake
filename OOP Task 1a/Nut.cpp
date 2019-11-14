@@ -11,3 +11,5 @@ void Nut::disappear()
 }
 bool Nut::has_been_collected() { return collected; }
 
+void Nut::respawn() { collected = false; }
+
