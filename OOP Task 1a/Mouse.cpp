@@ -8,6 +8,13 @@ Mouse::Mouse() : MoveableGridItem(MOUSE), alive(true), escaped(false), mouse_dx(
 
 bool Mouse::is_alive() const { return alive; }
 
+void Mouse::respawn() {
+	alive = true;
+	escaped = false;
+	x = (SIZE / 2);
+	y = (SIZE / 2);
+}
+
 bool Mouse::has_escaped() const { return escaped; }
 
 bool Mouse::has_reached_a_hole(Underground ug) const

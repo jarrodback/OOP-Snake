@@ -27,13 +27,12 @@ private:
 
 public:
 	Game(string name);
-	void set_up();
-	void process_input(int key);
-	vector<vector<char>> prepare_grid();
-	bool is_running() const;
+	void setup();
+	void resetGame();
+	void processInput(int key);
+	vector<vector<char>> prepareGrid();
+	bool isRunning() const;
 	string get_end_reason() const;
 	string getPlayerName() const;
 	int getPlayerScore() const;
-	void readFile();
-	void writeFile();
 };
