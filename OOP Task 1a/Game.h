@@ -25,6 +25,8 @@ private:
 	void apply_rules();
 	int find_hole_number_at_position(int x, int y) const;
 
+	
+
 public:
 	Game(string name);
 	void setup();
@@ -35,4 +37,6 @@ public:
 	string get_end_reason() const;
 	string getPlayerName() const;
 	int getPlayerScore() const;
+	void cheatMode();
+	bool isCheatModeActive();
 };

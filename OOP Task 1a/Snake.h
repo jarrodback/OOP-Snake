@@ -10,6 +10,7 @@ private:
 	vector<MoveableGridItem> snakeBody;
 	void set_direction(int& dx, int& dy) const;
 	void createSnake();
+	bool immoblised = false;
 public:
 	Snake();
 	~Snake();
@@ -19,4 +20,5 @@ public:
 	void chase_mouse();
 	void resetSnake();
 	void position_at_random();
+	void immbolise();
 };

@@ -45,15 +45,18 @@ void Snake::chase_mouse()
 	set_direction(snake_dx, snake_dy);
 
 	//go in that direction
-	for (int x = snakeBody.size() -1; x > 0; x--)
-	{
-		snakeBody.at(x).SetX(snakeBody.at(x - 1).getX());
-		snakeBody.at(x).SetY(snakeBody.at(x - 1).getY());
+	if (!immoblised) {
+		for (int x = snakeBody.size() - 1; x > 0; x--)
+		{
+			snakeBody.at(x).SetX(snakeBody.at(x - 1).getX());
+			snakeBody.at(x).SetY(snakeBody.at(x - 1).getY());
+		}
+		snakeBody.at(0).update_position(snake_dx, snake_dy);
 	}
-	snakeBody.at(0).update_position(snake_dx, snake_dy);
 }
 
 void Snake::resetSnake() {
+	immoblised = false;
 	snakeBody.clear();
 	createSnake();
 }
@@ -67,15 +70,17 @@ void Snake::set_direction(int& dx, int& dy) const
 	dx = 0; dy = 0;
 
 	// update coordinate if necessary
-	if (snakeBody.at(0).getX() < p_mouse->getX())         // if snake on left of mouse
-		dx = 1;                        // snake should move right
-	else if (snakeBody.at(0).getX() > p_mouse->getX())    // if snake on left of mouse
-		dx = -1;						       // snake should move left
+	if (!immoblised) {
+		if (snakeBody.at(0).getX() < p_mouse->getX())         // if snake on left of mouse
+			dx = 1;                        // snake should move right
+		else if (snakeBody.at(0).getX() > p_mouse->getX())    // if snake on left of mouse
+			dx = -1;						       // snake should move left
 
-	if (snakeBody.at(0).getY() < p_mouse->getY())         // if snake is above mouse
-		dy = 1;                        // snake should move down
-	else if (snakeBody.at(0).getY() > p_mouse->getY())    // if snake is below mouse
-		dy = -1;						       // snake should move up
+		if (snakeBody.at(0).getY() < p_mouse->getY())         // if snake is above mouse
+			dy = 1;                        // snake should move down
+		else if (snakeBody.at(0).getY() > p_mouse->getY())    // if snake is below mouse
+			dy = -1;						       // snake should move up
+	}
 }
 void Snake::createSnake()
 {
@@ -92,4 +97,7 @@ void Snake::position_at_random()
 	int y = rng.get_random_value(SIZE);
 	snakeBody.at(0).SetX(x);
 	snakeBody.at(0).SetY(y);
+}
+void Snake::immbolise() {
+	immoblised = true;
 }

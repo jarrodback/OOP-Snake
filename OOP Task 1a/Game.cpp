@@ -21,6 +21,7 @@ void Game::resetGame() {
 	snake.resetSnake();
 	snake.position_at_random();
 	snake.spot_mouse(&mouse);
+	player.resetCheat();
 }
 
 void Game::processInput(int key)
@@ -110,11 +111,27 @@ int Game::find_hole_number_at_position(int x, int y) const
 	return -1; // not a hole
 }
 
+void Game::cheatMode() {
+	snake.immbolise();
+	player.cheat();
+}
+
+bool Game::isCheatModeActive() {
+	if (player.isCheating()) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 void Game::apply_rules()
 {
 	if (snake.has_caught_mouse())
 	{
-		player.updateScore(player.getScore() - 1);
+		if (!player.isCheating()) {
+			player.updateScore(player.getScore() - 1);
+		}
 		mouse.die();
 	}
 	else
@@ -125,7 +142,9 @@ void Game::apply_rules()
 		}
 		if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == true)
 		{
-			player.updateScore(player.getScore() + 1);
+			if (!player.isCheating()) {
+				player.updateScore(player.getScore() + 1);
+			}
 			mouse.escape_into_hole();
 		}
 	}

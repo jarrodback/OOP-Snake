@@ -14,3 +14,15 @@ int Player::getScore() const{
 void Player::updateScore(int amount) {
 	score.updateAmount(amount);
 }
+
+void Player::cheat() {
+	cheating = true;
+}
+
+void Player::resetCheat() {
+	cheating = false;
+}
+
+bool Player::isCheating() {
+	return cheating;
+}
