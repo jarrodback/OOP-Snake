@@ -10,6 +10,7 @@ string getName() {
 
 int main()
 {
+	int count = 0;
 	bool cont = true;
 	Game game(getName());
 	InitWindow(900, 600, "OOP Assignment 1");
@@ -21,7 +22,9 @@ int main()
 		ClearBackground(DARKGRAY);
 		DrawText(("Player Name: " + game.getPlayerName()).c_str(), 610, 10, 20, LIGHTGRAY);
 		DrawText(("Score: " + to_string(game.getPlayerScore())).c_str(), 610, 40, 20, LIGHTGRAY);
-		DrawText("Press 'Q' to quit", 610, 120, 20, LIGHTGRAY);
+		DrawText("Controls", 610, 140, 20, LIGHTGRAY);
+		DrawText("Press 'C' to cheat", 610, 160, 20, LIGHTGRAY);
+		DrawText("Press 'Q' to quit", 610, 180, 20, LIGHTGRAY);
 		if (game.isRunning())
 		{
 			if (IsKeyPressed(KEY_RIGHT))  game.processInput(KEY_RIGHT);
@@ -29,16 +32,19 @@ int main()
 			if (IsKeyPressed(KEY_UP))     game.processInput(KEY_UP);
 			if (IsKeyPressed(KEY_DOWN))   game.processInput(KEY_DOWN);
 			if (IsKeyPressed(KEY_Q)) cont = false;
+			if (IsKeyPressed(KEY_C)) game.cheatMode();
 		}
 		else
 		{
 			DrawText(game.get_end_reason().c_str(), 610, 70, 20, LIGHTGRAY);
-			DrawText("Press 'Y' to continue", 610, 140, 20, LIGHTGRAY);
+			DrawText("Press 'Y' to continue", 610, 90, 20, LIGHTGRAY);
 			if (IsKeyPressed(KEY_Y)) {
 				game.resetGame();
 			}
 			if (IsKeyPressed(KEY_Q)) cont = false;
 		}
+
+		if (game.isCheatModeActive()) 	DrawText("*CHEAT MODE*", 610, 220, 20, RED);
 
 		const int cellSize = (int)((float)GetScreenHeight() / (float)(SIZE));
 

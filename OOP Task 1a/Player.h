@@ -9,11 +9,15 @@ class Player
 private:
 	const string name;
 	Score score;
+	bool cheating;
 public:
 	Player(string name);
 	//Query
 	string getName() const;
 	int getScore() const;
 	void updateScore(int amount);
+	void cheat();
+	void resetCheat();
+	bool isCheating();
 };
 
