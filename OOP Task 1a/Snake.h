@@ -20,5 +20,5 @@ public:
 	void chase_mouse();
 	void resetSnake();
 	void position_at_random();
-	void immbolise();
+	void toggleImmbolise();
 };

@@ -36,7 +36,13 @@ public:
 	bool isRunning() const;
 	string get_end_reason() const;
 	string getPlayerName() const;
+	Mouse getMouse() const;
+	Snake getSnake() const;
 	int getPlayerScore() const;
+	//void saveFile();
 	void cheatMode();
-	bool isCheatModeActive();
+	bool isCheatModeActive() const;
 };
+ostream& operator<<(ostream& os, const Game& game);
+//ostream& operator>>(ostream& os, const Game& game);
+

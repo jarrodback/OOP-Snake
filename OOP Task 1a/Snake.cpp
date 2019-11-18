@@ -98,6 +98,6 @@ void Snake::position_at_random()
 	snakeBody.at(0).SetX(x);
 	snakeBody.at(0).SetY(y);
 }
-void Snake::immbolise() {
-	immoblised = true;
+void Snake::toggleImmbolise() {
+	immoblised = !immoblised;
 }

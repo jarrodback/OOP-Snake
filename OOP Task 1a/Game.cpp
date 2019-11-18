@@ -112,11 +112,12 @@ int Game::find_hole_number_at_position(int x, int y) const
 }
 
 void Game::cheatMode() {
-	snake.immbolise();
-	player.cheat();
+	snake.toggleImmbolise();
+	player.toggleCheat();
 }
 
-bool Game::isCheatModeActive() {
+bool Game::isCheatModeActive() const 
+{
 	if (player.isCheating()) {
 		return true;
 	}
@@ -167,8 +168,49 @@ string Game::getPlayerName() const {
 	return player.getName();
 }
 
+Mouse Game::getMouse() const
+{
+	return mouse;
+}
+
+Snake Game::getSnake() const
+{
+	return snake;
+}
+
 int Game::getPlayerScore() const {
 	return player.getScore();
 }
 
+ostream& operator<<(ostream& os, const Game& game)
+{
+	if (game.getMouse().is_alive())
+	{
+		os << "alive" <<endl ;
+		os << game.getMouse().getX() << "|" << game.getMouse().getY() << endl;
+		os << game.getSnake().getSnake().size() << endl;
+		for (MoveableGridItem body : game.getSnake().getSnake())
+		{
+			os << body.getX() << "|" << body.getY() << endl;
+		}
+	}
+	else os << "dead" <<endl;
+	os << game.getPlayerName() << "|" << game.getPlayerScore() << endl;
+	return os;
+}
+//ostream& operator>>(ostream& os, Game& game)
+//{
+//	string alive; 
+//	os >> alive;
+//
+//	if (alive == "false")
+//	{
+//		
+//	}
+//	else
+//	{
+//
+//	}
+//	return os;
+//}
 

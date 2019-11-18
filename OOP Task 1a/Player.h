@@ -16,8 +16,8 @@ public:
 	string getName() const;
 	int getScore() const;
 	void updateScore(int amount);
-	void cheat();
+	void toggleCheat();
 	void resetCheat();
-	bool isCheating();
+	bool isCheating() const;
 };
 

@@ -15,14 +15,14 @@ void Player::updateScore(int amount) {
 	score.updateAmount(amount);
 }
 
-void Player::cheat() {
-	cheating = true;
+void Player::toggleCheat() {
+	cheating = !cheating;
 }
 
 void Player::resetCheat() {
 	cheating = false;
 }
 
-bool Player::isCheating() {
+bool Player::isCheating() const {
 	return cheating;
 }

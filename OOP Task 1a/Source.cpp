@@ -7,6 +7,14 @@ string getName() {
 	cin >> name;
 	return name;
 }
+void saveFile(Game& game)
+{
+	ofstream fout;
+	fout.open("Game.txt");
+	if (fout.fail()) cout << "\nError saving game.";
+	else fout << game; // operator << for Game instances
+	fout.close();
+}
 
 int main()
 {
@@ -45,6 +53,7 @@ int main()
 		}
 
 		if (game.isCheatModeActive()) 	DrawText("*CHEAT MODE*", 610, 220, 20, RED);
+		else  DrawText("", 610, 220, 20, LIGHTGRAY);
 
 		const int cellSize = (int)((float)GetScreenHeight() / (float)(SIZE));
 
@@ -73,6 +82,7 @@ int main()
 		}
 		EndDrawing();
 	}
+	saveFile(game);
 	CloseWindow();
 	return 0;
 }
