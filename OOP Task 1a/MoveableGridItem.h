@@ -1,9 +1,12 @@
 #pragma once
 #include "GridItem.h"
+#include "RandomNumberGenerator.h"
+
 class MoveableGridItem : public GridItem
 {
 protected:
 	int x, y;
+	static RandomNumberGenerator rng;
 public:
 	MoveableGridItem(char symbol);
 	void update_position(int dx, int dy);
@@ -12,4 +15,5 @@ public:
 	void SetY(int dy);
 	int getX() const;
 	int getY() const;
+	void randomisePosition();
 };

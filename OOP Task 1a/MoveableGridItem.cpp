@@ -1,4 +1,7 @@
 #include "MoveableGridItem.h"
+#include "Constants.h"
+
+RandomNumberGenerator MoveableGridItem::rng;
 MoveableGridItem::MoveableGridItem(char symbol) : GridItem(symbol)
 {
 	x = 0; y = 0;
@@ -33,4 +36,9 @@ int MoveableGridItem::getX() const
 int MoveableGridItem::getY() const
 {
 	return y;
+}
+
+void MoveableGridItem::randomisePosition() {
+	x = rng.get_random_value(SIZE);
+	y = rng.get_random_value(SIZE);
 }

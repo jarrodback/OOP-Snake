@@ -10,13 +10,21 @@ void Game::setup()
 	underground.set_hole_no_at_position(2, 7, 15);
 
 	// mouse state already set up in its contructor
+	setPosition();
 	// set up snake
-	snake.position_at_random();
 	snake.spot_mouse(&mouse);
 }
-
+void Game::setPosition()
+{
+	mouse.randomisePosition();
+	while (mouse.is_at_position(snake.getSnake().at(0).getX(), snake.getSnake().at(0).getY())
+		|| mouse.is_at_position(nut.getX(), nut.getY())){
+			mouse.randomisePosition();
+	}
+}
 void Game::resetGame() {
 	mouse.respawn();
+	setPosition();
 	nut.respawn();
 	snake.resetSnake();
 	snake.position_at_random();

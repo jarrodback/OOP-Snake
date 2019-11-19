@@ -30,6 +30,7 @@ private:
 public:
 	Game(string name);
 	void setup();
+	void setPosition();
 	void resetGame();
 	void processInput(int key);
 	vector<vector<char>> prepareGrid();
