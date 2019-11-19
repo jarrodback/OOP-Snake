@@ -42,7 +42,8 @@ public:
 	//void saveFile();
 	void cheatMode();
 	bool isCheatModeActive() const;
+	ostream& operator<<(ostream& os);
 };
 ostream& operator<<(ostream& os, const Game& game);
-//ostream& operator>>(ostream& os, const Game& game);
+istream& operator>>(istream& is, Game& game);
 

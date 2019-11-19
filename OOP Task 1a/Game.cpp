@@ -116,7 +116,7 @@ void Game::cheatMode() {
 	player.toggleCheat();
 }
 
-bool Game::isCheatModeActive() const 
+bool Game::isCheatModeActive() const
 {
 	if (player.isCheating()) {
 		return true;
@@ -141,12 +141,25 @@ void Game::apply_rules()
 		{
 			nut.disappear();
 		}
-		if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == true)
+		else if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == true)
 		{
-			if (!player.isCheating()) {
+			if (!player.hasCheated()) {
 				player.updateScore(player.getScore() + 1);
 			}
 			mouse.escape_into_hole();
+		}
+		else if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == false)
+		{
+			//move mouse to another hole
+			RandomNumberGenerator rng;
+			int hole = rng.get_random_value(3) - 1;
+			while (mouse.getX() == underground.get_hole_no(hole).getX() && mouse.getY() == underground.get_hole_no(hole).getY())
+			{
+				hole = rng.get_random_value(3) - 1;
+			}
+			mouse.SetX(underground.getHoles().at(hole).getX());
+			mouse.SetY(underground.getHoles().at(hole).getY());
+
 		}
 	}
 }
@@ -181,36 +194,57 @@ Snake Game::getSnake() const
 int Game::getPlayerScore() const {
 	return player.getScore();
 }
-
+//TODO
+// does mouse have nut?
+//
 ostream& operator<<(ostream& os, const Game& game)
 {
 	if (game.getMouse().is_alive())
 	{
-		os << "alive" <<endl ;
-		os << game.getMouse().getX() << "|" << game.getMouse().getY() << endl;
+		os << "alive" << endl;
+		os << game.getMouse().getX() << endl;
+		os << game.getMouse().getY() << endl;
 		os << game.getSnake().getSnake().size() << endl;
 		for (MoveableGridItem body : game.getSnake().getSnake())
 		{
-			os << body.getX() << "|" << body.getY() << endl;
+			os << body.getX() << endl;
+			os << body.getY() << endl;
 		}
 	}
-	else os << "dead" <<endl;
-	os << game.getPlayerName() << "|" << game.getPlayerScore() << endl;
+	else os << "dead" << endl;
+	os << game.getPlayerName() << endl;
+	os << game.getPlayerScore() << endl;
 	return os;
 }
-//ostream& operator>>(ostream& os, Game& game)
-//{
-//	string alive; 
-//	os >> alive;
-//
-//	if (alive == "false")
-//	{
-//		
-//	}
-//	else
-//	{
-//
-//	}
-//	return os;
-//}
+istream& operator>>(istream& is, Game& game)
+{
+	string alive;
+	is >> alive;
+
+	if (alive == "dead")
+	{
+
+	}
+	else
+	{
+		int x, y;
+		is >> x;
+		game.getMouse().SetX(x);
+		is >> y;
+		game.getMouse().SetY(y);
+		int snakeLength;
+		is >> snakeLength;
+		for (int x = 0; x < snakeLength; x++)
+		{
+			MoveableGridItem item(SNAKETAIL);
+			int itemX, itemY;
+			is >> itemX;
+			is >> itemY;
+			item.SetX(itemX);
+			item.SetY(itemY);
+			game.getSnake().getSnake().push_back(item);
+		}
+	}
+	return is;
+}
 

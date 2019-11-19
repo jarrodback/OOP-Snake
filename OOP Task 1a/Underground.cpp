@@ -11,7 +11,7 @@ Hole::Hole(int x, int y) : FixedGridItem(HOLE, x, y)
 // number of holes in underground
 static const int MAXHOLES(3);
 
-Underground::Underground() :  holes(MAXHOLES)
+Underground::Underground() :  holes()
 {
 }
 
@@ -32,7 +32,7 @@ void Underground::set_hole_no_at_position(int no, int x, int y)
 
 bool Underground::is_valid_hole_number(int no) const
 {
-	return no >= 0 && no < (int)holes.size();
+	return no >= 0 && no < MAXHOLES;//(int)holes.size();
 }
 
 vector<Hole> Underground::getHoles() const

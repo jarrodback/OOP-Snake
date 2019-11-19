@@ -10,6 +10,7 @@ private:
 	const string name;
 	Score score;
 	bool cheating;
+	bool cheated;
 public:
 	Player(string name);
 	//Query
@@ -19,5 +20,6 @@ public:
 	void toggleCheat();
 	void resetCheat();
 	bool isCheating() const;
+	bool hasCheated() const;
 };
 

@@ -15,12 +15,20 @@ void saveFile(Game& game)
 	else fout << game; // operator << for Game instances
 	fout.close();
 }
-
+void loadFile(Game& game)
+{
+	ifstream fin;
+	fin.open("Game.txt");
+	if (fin.fail()) cout << "\nError loading game.";
+	else fin >> game;   // operator >> for Game instances
+	fin.close();
+}
 int main()
 {
 	int count = 0;
 	bool cont = true;
 	Game game(getName());
+	loadFile(game);
 	InitWindow(900, 600, "OOP Assignment 1");
 	SetTargetFPS(60);
 	game.setup();

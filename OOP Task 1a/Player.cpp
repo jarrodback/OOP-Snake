@@ -1,7 +1,8 @@
 #include "Player.h"
 
 Player::Player(string name): name(name) 
-{}
+{
+}
 
 string Player::getName() const{
 	return name;
@@ -17,6 +18,7 @@ void Player::updateScore(int amount) {
 
 void Player::toggleCheat() {
 	cheating = !cheating;
+	cheated = true;
 }
 
 void Player::resetCheat() {
@@ -25,4 +27,10 @@ void Player::resetCheat() {
 
 bool Player::isCheating() const {
 	return cheating;
+}
+
+bool Player::hasCheated() const
+{
+	if (cheated) return true;
+	else return false;
 }

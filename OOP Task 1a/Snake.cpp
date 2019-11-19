@@ -45,7 +45,15 @@ void Snake::chase_mouse()
 	set_direction(snake_dx, snake_dy);
 
 	//go in that direction
-	if (!immoblised) {
+	bool collision = false;
+	for (MoveableGridItem body : snakeBody)
+	{
+		if (body.is_at_position(snakeBody.at(0).getX() + snake_dx, snakeBody.at(0).getY() + snake_dy))
+		{
+			collision = true;
+		}
+	}
+	if (!immoblised && collision == false) {
 		for (int x = snakeBody.size() - 1; x > 0; x--)
 		{
 			snakeBody.at(x).SetX(snakeBody.at(x - 1).getX());

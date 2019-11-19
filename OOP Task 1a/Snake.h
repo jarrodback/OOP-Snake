@@ -2,7 +2,7 @@
 #include "MoveableGridItem.h"
 #include "Mouse.h"
 #include "RandomNumberGenerator.h"
-
+//todo bring head out of vector and inherit
 class Snake {
 private:
 	static RandomNumberGenerator rng;
