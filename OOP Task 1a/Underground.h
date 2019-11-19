@@ -4,6 +4,7 @@
 #include <cassert>
 #include <vector>
 #include "constants.h"
+#include "Nut.h"
 
 using namespace std;
 
@@ -25,4 +26,6 @@ public:
 	Hole get_hole_no(int no) const;
 	void set_hole_no_at_position(int no, int x, int y);
 	vector<Hole> getHoles() const;
+	bool hasNutReachedHole(Nut& nut) const;
+
 };

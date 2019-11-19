@@ -4,7 +4,6 @@
 RandomNumberGenerator MoveableGridItem::rng;
 MoveableGridItem::MoveableGridItem(char symbol) : GridItem(symbol)
 {
-	x = 0; y = 0;
 }
 
 bool MoveableGridItem::is_at_position(int x, int y) const

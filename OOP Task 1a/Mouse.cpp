@@ -6,6 +6,16 @@ Mouse::Mouse() : MoveableGridItem(MOUSE), alive(true), escaped(false), mouse_dx(
 	y = (SIZE / 2);
 }
 
+int Mouse::getDirectionX() const
+{
+	return mouse_dx;
+}
+
+int Mouse::getDirectionY() const
+{
+	return mouse_dy;
+}
+
 bool Mouse::is_alive() const { return alive; }
 
 void Mouse::respawn() {

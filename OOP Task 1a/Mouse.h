@@ -15,6 +15,8 @@ public:
 	// constructor
 	Mouse();
 	// accessors
+	int getDirectionX() const;
+	int getDirectionY() const;
 	bool is_alive() const;
 	bool has_escaped() const;
 	bool has_reached_a_hole(Underground ug) const;

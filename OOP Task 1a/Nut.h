@@ -1,14 +1,14 @@
 #pragma once
-#include "FixedGridItem.h"
+#include "MoveableGridItem.h"
 
-class Nut : public FixedGridItem
+class Nut : public MoveableGridItem
 {
 private:
 	bool collected;
 public:
 	Nut(int x, int y);
 	bool has_been_collected();
-	void disappear();
 	void respawn();
+	void disappear();
 };
 

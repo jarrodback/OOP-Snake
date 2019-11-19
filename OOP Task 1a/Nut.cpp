@@ -1,8 +1,8 @@
 #include "Nut.h"
 #include "Constants.h"
-Nut::Nut(int x, int y) :FixedGridItem(NUT, x, y), collected(false)
+Nut::Nut(int x, int y) :MoveableGridItem(NUT), collected(false)
 {
-
+	randomisePosition();
 }
 
 void Nut::disappear()
@@ -12,4 +12,5 @@ void Nut::disappear()
 bool Nut::has_been_collected() { return collected; }
 
 void Nut::respawn() { collected = false; }
+
 

@@ -39,3 +39,12 @@ vector<Hole> Underground::getHoles() const
 {
 	return holes;
 }
+
+bool Underground::hasNutReachedHole(Nut& nut) const
+{
+	for (Hole h : holes)
+	{
+		if (nut.is_at_position(h.getX(), h.getY())) return true;
+	}
+	return false;
+}

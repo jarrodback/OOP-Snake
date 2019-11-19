@@ -21,15 +21,25 @@ void Game::setPosition()
 		|| mouse.is_at_position(nut.getX(), nut.getY())){
 			mouse.randomisePosition();
 	}
+	while (nut.is_at_position(underground.get_hole_no(0).getX(), underground.get_hole_no(0).getY()) ||
+		nut.is_at_position(underground.get_hole_no(1).getX(), underground.get_hole_no(1).getY()) ||
+		nut.is_at_position(underground.get_hole_no(2).getX(), underground.get_hole_no(2).getY()) ||
+		nut.is_at_position(snake.getSnake().at(0).getX(), snake.getSnake().at(0).getY()) ||
+		nut.getX() >= 18 || nut.getX() <= 2 || nut.getY() >= 18 || nut.getY() <= 2)
+	{
+		nut.randomisePosition();
+	}
 }
+
 void Game::resetGame() {
 	mouse.respawn();
-	setPosition();
 	nut.respawn();
+	nut.randomisePosition();
 	snake.resetSnake();
 	snake.position_at_random();
 	snake.spot_mouse(&mouse);
 	player.resetCheat();
+	setPosition();
 }
 
 void Game::processInput(int key)
@@ -136,7 +146,7 @@ bool Game::isCheatModeActive() const
 
 void Game::apply_rules()
 {
-	if (snake.has_caught_mouse())
+	if (!player.isCheating() && snake.has_caught_mouse())
 	{
 		if (!player.isCheating()) {
 			player.updateScore(player.getScore() - 1);
@@ -147,16 +157,20 @@ void Game::apply_rules()
 	{
 		if (mouse.has_reached_nut(nut))
 		{
+			nut.update_position(mouse.getDirectionX(), mouse.getDirectionY());
+		}
+		if (underground.hasNutReachedHole(nut))
+		{
 			nut.disappear();
 		}
-		else if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == true)
+		if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == true)
 		{
 			if (!player.hasCheated()) {
 				player.updateScore(player.getScore() + 1);
 			}
 			mouse.escape_into_hole();
 		}
-		else if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == false)
+		if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == false)
 		{
 			//move mouse to another hole
 			RandomNumberGenerator rng;
