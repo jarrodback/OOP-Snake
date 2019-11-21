@@ -28,6 +28,7 @@ int main()
 	int count = 0;
 	bool cont = true;
 	Game game;
+	game.setup();
 	char answer;
 	do {
 		cout << "Would you like to load the previous save?(Y/N): " << endl;
@@ -40,8 +41,6 @@ int main()
 	else
 	{
 		game.getPlayer().setName(getName());
-		game.setup();
-
 	}
 	InitWindow(900, 600, "OOP Assignment 1");
 	SetTargetFPS(60);

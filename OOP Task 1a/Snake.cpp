@@ -17,7 +17,7 @@ Snake::~Snake()
 {
 
 }
-vector<MoveableGridItem> Snake::getSnake() const
+vector<MoveableGridItem>& Snake::getSnake()
 {
 	return snakeBody;
 }
@@ -109,10 +109,10 @@ void Snake::position_at_random()
 void Snake::toggleImmbolise() {
 	immoblised = !immoblised;
 }
-ostream& operator<<(ostream& os, const Snake& snake)
+ostream& operator<<(ostream& os, Snake& snake)
 {
 	os << snake.getSnake().size() << endl;
-	for (MoveableGridItem body : snake.getSnake())
+	for (MoveableGridItem& body : snake.getSnake())
 	{
 		os << body.getX() << endl;
 		os << body.getY() << endl;

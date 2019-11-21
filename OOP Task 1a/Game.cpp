@@ -280,7 +280,7 @@ istream& operator>>(istream& is, Game& game)
 			is >> snakeX;
 			is >> snakeY;
 			game.getSnake().getSnake().at(x).SetX(snakeX);
-			game.getSnake().getSnake().at(x).SetX(snakeY);
+			game.getSnake().getSnake().at(x).SetY(snakeY);
 		}
 	}
 
