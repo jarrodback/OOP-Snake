@@ -1,4 +1,8 @@
 #include "Game.h"
+Game::Game() : nut(10, 5)
+{
+
+}
 Game::Game(string name) : nut(10, 5), player(name)
 {
 }
@@ -203,14 +207,24 @@ string Game::getPlayerName() const {
 	return player.getName();
 }
 
-Mouse Game::getMouse() const
+Mouse& Game::getMouse()
 {
 	return mouse;
 }
 
-Snake Game::getSnake() const
+Snake& Game::getSnake()
 {
 	return snake;
+}
+
+Nut& Game::getNut()
+{
+	return nut;
+}
+
+Player& Game::getPlayer()
+{
+	return player;
 }
 
 int Game::getPlayerScore() const {
@@ -219,54 +233,58 @@ int Game::getPlayerScore() const {
 //TODO
 // does mouse have nut?
 //
-ostream& operator<<(ostream& os, const Game& game)
+ostream& operator<<(ostream& os, Game& game)
 {
+	os << game.getPlayer(); // save player
+	os << game.getMouse(); //save mouse
 	if (game.getMouse().is_alive())
 	{
-		os << "alive" << endl;
-		os << game.getMouse().getX() << endl;
-		os << game.getMouse().getY() << endl;
-		os << game.getSnake().getSnake().size() << endl;
-		for (MoveableGridItem body : game.getSnake().getSnake())
-		{
-			os << body.getX() << endl;
-			os << body.getY() << endl;
-		}
+		os << game.getNut(); //save nut
+		os << game.getSnake(); //save snake
 	}
-	else os << "dead" << endl;
-	os << game.getPlayerName() << endl;
-	os << game.getPlayerScore() << endl;
 	return os;
 }
 istream& operator>>(istream& is, Game& game)
 {
-	string alive;
-	is >> alive;
+	int playerScore; string playerName;
+	is >> playerName;
+	is >> playerScore;
+	game.getPlayer().setName(playerName);
+	game.getPlayer().updateScore(playerScore);
+	string mouseAlive;
+	is >> mouseAlive;
 
-	if (alive == "dead")
+	if (mouseAlive == "mouse_alive")
 	{
+		int mouseX, mouseY;
+		is >> mouseX;
+		is >> mouseY;
+		game.getMouse().SetX(mouseX);
+		game.getMouse().SetY(mouseY);
 
-	}
-	else
-	{
-		int x, y;
-		is >> x;
-		game.getMouse().SetX(x);
-		is >> y;
-		game.getMouse().SetY(y);
-		int snakeLength;
-		is >> snakeLength;
-		for (int x = 0; x < snakeLength; x++)
+		string nutCollected;
+		is >> nutCollected;
+		if (nutCollected == "nut_not_collected")
 		{
-			MoveableGridItem item(SNAKETAIL);
-			int itemX, itemY;
-			is >> itemX;
-			is >> itemY;
-			item.SetX(itemX);
-			item.SetY(itemY);
-			game.getSnake().getSnake().push_back(item);
+			int nutX, nutY;
+			is >> nutX;
+			is >> nutY;
+			game.getNut().SetX(nutX);
+			game.getNut().SetY(nutY);
+		}
+		int snakeSize;
+		is >> snakeSize;
+		for (int x = 0; x < snakeSize; x++)
+		{
+			int snakeX, snakeY;
+			is >> snakeX;
+			is >> snakeY;
+			game.getSnake().getSnake().at(x).SetX(snakeX);
+			game.getSnake().getSnake().at(x).SetX(snakeY);
 		}
 	}
+
+
 	return is;
 }
 

@@ -28,6 +28,7 @@ private:
 	
 
 public:
+	Game();
 	Game(string name);
 	void setup();
 	void setPosition();
@@ -37,14 +38,15 @@ public:
 	bool isRunning() const;
 	string get_end_reason() const;
 	string getPlayerName() const;
-	Mouse getMouse() const;
-	Snake getSnake() const;
+	Mouse& getMouse();
+	Snake& getSnake();
+	Nut& getNut();
+	Player& getPlayer();
 	int getPlayerScore() const;
 	//void saveFile();
 	void cheatMode();
 	bool isCheatModeActive() const;
-	ostream& operator<<(ostream& os);
 };
-ostream& operator<<(ostream& os, const Game& game);
+ostream& operator<<(ostream& os, Game& game);
 istream& operator>>(istream& is, Game& game);
 

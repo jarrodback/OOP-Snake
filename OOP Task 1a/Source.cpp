@@ -27,11 +27,24 @@ int main()
 {
 	int count = 0;
 	bool cont = true;
-	Game game(getName());
-	loadFile(game);
+	Game game;
+	char answer;
+	do {
+		cout << "Would you like to load the previous save?(Y/N): " << endl;
+		cin >> answer;
+	} while (toupper(answer) != 'Y' && toupper(answer) != 'N');
+	if (toupper(answer) == 'Y')
+	{
+		loadFile(game);
+	}
+	else
+	{
+		game.getPlayer().setName(getName());
+		game.setup();
+
+	}
 	InitWindow(900, 600, "OOP Assignment 1");
 	SetTargetFPS(60);
-	game.setup();
 	while (cont)
 	{
 		BeginDrawing();

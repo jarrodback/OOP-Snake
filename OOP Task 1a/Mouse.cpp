@@ -77,3 +77,18 @@ void Mouse::scamper(int key)
 	if (((x + mouse_dx) >= 1) && ((x + mouse_dx) <= SIZE) && ((y + mouse_dy) >= 1) && ((y + mouse_dy) <= SIZE))
 		update_position(mouse_dx, mouse_dy);
 }
+
+ostream& operator<<(ostream& os, const Mouse& mouse)
+{
+	if (mouse.is_alive())
+	{
+		os << "mouse_alive" << endl;
+		os << mouse.getX() << endl;
+		os << mouse.getY() << endl;
+	}
+	else
+	{
+		os << "mouse_dead" << endl;
+	}
+	return os;
+}

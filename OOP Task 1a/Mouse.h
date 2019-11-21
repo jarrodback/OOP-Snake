@@ -27,3 +27,4 @@ public:
 	void escape_into_hole();
 	void scamper(int key);
 };
+ostream& operator<<(ostream& os, const Mouse& mouse);

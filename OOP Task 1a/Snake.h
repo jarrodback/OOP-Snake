@@ -14,7 +14,7 @@ private:
 public:
 	Snake();
 	~Snake();
-	vector<MoveableGridItem> getSnake();
+	vector<MoveableGridItem> getSnake() const;
 	void spot_mouse(Mouse* p_mouse); //sets mouse pointer
 	bool has_caught_mouse() const;
 	void chase_mouse();
@@ -22,3 +22,4 @@ public:
 	void position_at_random();
 	void toggleImmbolise();
 };
+ostream& operator<<(ostream& os, const Snake& snake);
