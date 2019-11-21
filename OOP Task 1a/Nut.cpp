@@ -9,6 +9,7 @@ void Nut::disappear()
 {
 	collected = true;
 }
+
 bool Nut::has_been_collected() { return collected; }
 
 void Nut::respawn() { collected = false; }

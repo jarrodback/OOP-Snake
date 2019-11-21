@@ -18,8 +18,8 @@ void Game::setPosition()
 {
 	mouse.randomisePosition();
 	while (mouse.is_at_position(snake.getSnake().at(0).getX(), snake.getSnake().at(0).getY())
-		|| mouse.is_at_position(nut.getX(), nut.getY())){
-			mouse.randomisePosition();
+		|| mouse.is_at_position(nut.getX(), nut.getY())) {
+		mouse.randomisePosition();
 	}
 	while (nut.is_at_position(underground.get_hole_no(0).getX(), underground.get_hole_no(0).getY()) ||
 		nut.is_at_position(underground.get_hole_no(1).getX(), underground.get_hole_no(1).getY()) ||
@@ -268,5 +268,36 @@ istream& operator>>(istream& is, Game& game)
 		}
 	}
 	return is;
+}
+
+void Game::undo()
+{
+	if (mouse.getDirectionX() != NULL || mouse.getDirectionY() != NULL)
+	{
+		mouse.SetX(mouse.getPrevX());
+		mouse.SetY(mouse.getPrevY());
+	}
+	if (nut.getPrevX() != NULL || nut.getPrevY() != NULL)
+	{
+		if (nut.has_been_collected() == true)
+		{
+			nut.respawn();
+			nut.SetX(nut.getPrevX());
+			nut.SetY(nut.getPrevY());
+		}
+		else
+		{
+			nut.SetX(nut.getPrevX());
+			nut.SetY(nut.getPrevY());
+		}
+	}
+	for (MoveableGridItem& body : snake.getSnake())
+	{
+		if ((body.getPrevX() > 0 || body.getPrevY() > 0))
+		{
+			body.SetX(body.getPrevX());
+			body.SetY(body.getPrevY());
+		}
+	}
 }
 

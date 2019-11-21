@@ -17,7 +17,7 @@ Snake::~Snake()
 {
 
 }
-vector<MoveableGridItem> Snake::getSnake()
+vector<MoveableGridItem>& Snake::getSnake()
 {
 	return snakeBody;
 }
@@ -56,6 +56,8 @@ void Snake::chase_mouse()
 	if (!immoblised && collision == false) {
 		for (int x = snakeBody.size() - 1; x > 0; x--)
 		{
+			snakeBody.at(x).setPrevX(snakeBody.at(x).getX());
+			snakeBody.at(x).setPrevY(snakeBody.at(x).getY());
 			snakeBody.at(x).SetX(snakeBody.at(x - 1).getX());
 			snakeBody.at(x).SetY(snakeBody.at(x - 1).getY());
 		}

@@ -14,7 +14,7 @@ private:
 public:
 	Snake();
 	~Snake();
-	vector<MoveableGridItem> getSnake();
+	vector<MoveableGridItem>& getSnake();
 	void spot_mouse(Mouse* p_mouse); //sets mouse pointer
 	bool has_caught_mouse() const;
 	void chase_mouse();

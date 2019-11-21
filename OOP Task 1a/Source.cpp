@@ -41,6 +41,7 @@ int main()
 		DrawText("Controls", 610, 140, 20, LIGHTGRAY);
 		DrawText("Press 'C' to cheat", 610, 160, 20, LIGHTGRAY);
 		DrawText("Press 'Q' to quit", 610, 180, 20, LIGHTGRAY);
+		DrawText("Press 'U' to undo last move", 610, 200, 20, LIGHTGRAY);
 		if (game.isRunning())
 		{
 			if (IsKeyPressed(KEY_RIGHT))  game.processInput(KEY_RIGHT);
@@ -49,6 +50,7 @@ int main()
 			if (IsKeyPressed(KEY_DOWN))   game.processInput(KEY_DOWN);
 			if (IsKeyPressed(KEY_Q)) cont = false;
 			if (IsKeyPressed(KEY_C)) game.cheatMode();
+			if (IsKeyPressed(KEY_U)) game.undo();
 		}
 		else
 		{
