@@ -23,6 +23,8 @@ void MoveableGridItem::SetY(int dy)
 
 void MoveableGridItem::update_position(int dx, int dy)
 {
+	prevX = x;
+	prevY = y;
 	x += dx;
 	y += dy;
 }
@@ -40,4 +42,24 @@ int MoveableGridItem::getY() const
 void MoveableGridItem::randomisePosition() {
 	x = rng.get_random_value(SIZE);
 	y = rng.get_random_value(SIZE);
+}
+
+void MoveableGridItem::setPrevX(int x)
+{
+	prevX = x;
+}
+
+void MoveableGridItem::setPrevY(int y)
+{
+	prevY = y;
+}
+
+int MoveableGridItem::getPrevX()
+{
+	return prevX;
+}
+
+int MoveableGridItem::getPrevY()
+{
+	return prevY;
 }

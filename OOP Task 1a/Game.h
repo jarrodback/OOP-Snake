@@ -25,8 +25,6 @@ private:
 	void apply_rules();
 	int find_hole_number_at_position(int x, int y) const;
 
-	
-
 public:
 	Game();
 	Game(string name);
@@ -46,6 +44,8 @@ public:
 	//void saveFile();
 	void cheatMode();
 	bool isCheatModeActive() const;
+	//Undo
+	void undo();
 };
 ostream& operator<<(ostream& os, Game& game);
 istream& operator>>(istream& is, Game& game);

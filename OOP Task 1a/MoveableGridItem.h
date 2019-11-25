@@ -5,7 +5,7 @@
 class MoveableGridItem : public GridItem
 {
 protected:
-	int x, y;
+	int x, y, prevX, prevY;
 	static RandomNumberGenerator rng;
 public:
 	MoveableGridItem(char symbol);
@@ -16,4 +16,9 @@ public:
 	int getX() const;
 	int getY() const;
 	void randomisePosition();
+	void setPrevX(int x);
+	void setPrevY(int y);
+	int getPrevX();
+	int getPrevY();
+
 };
