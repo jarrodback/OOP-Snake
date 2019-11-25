@@ -26,6 +26,7 @@ private:
 	int find_hole_number_at_position(int x, int y) const;
 
 public:
+	Game();
 	Game(string name);
 	void setup();
 	void setPosition();
@@ -35,16 +36,17 @@ public:
 	bool isRunning() const;
 	string get_end_reason() const;
 	string getPlayerName() const;
-	Mouse getMouse() const;
-	Snake getSnake() const;
+	Mouse& getMouse();
+	Snake& getSnake();
+	Nut& getNut();
+	Player& getPlayer();
 	int getPlayerScore() const;
 	//void saveFile();
 	void cheatMode();
 	bool isCheatModeActive() const;
-	ostream& operator<<(ostream& os);
 	//Undo
 	void undo();
 };
-ostream& operator<<(ostream& os, const Game& game);
+ostream& operator<<(ostream& os, Game& game);
 istream& operator>>(istream& is, Game& game);
 

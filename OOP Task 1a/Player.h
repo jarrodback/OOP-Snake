@@ -7,12 +7,14 @@ using namespace std;
 class Player
 {
 private:
-	const string name;
+	string name;
 	Score score;
 	bool cheating;
 	bool cheated;
 public:
+	Player();
 	Player(string name);
+	void setName(string name);
 	//Query
 	string getName() const;
 	int getScore() const;
@@ -22,4 +24,4 @@ public:
 	bool isCheating() const;
 	bool hasCheated() const;
 };
-
+ostream& operator<<(ostream& os, const Player& player);

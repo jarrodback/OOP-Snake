@@ -22,3 +22,4 @@ public:
 	void position_at_random();
 	void toggleImmbolise();
 };
+ostream& operator<<(ostream& os, Snake& snake);

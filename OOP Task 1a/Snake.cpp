@@ -111,3 +111,14 @@ void Snake::position_at_random()
 void Snake::toggleImmbolise() {
 	immoblised = !immoblised;
 }
+ostream& operator<<(ostream& os, Snake& snake)
+{
+	os << snake.getSnake().size() << endl;
+	for (MoveableGridItem& body : snake.getSnake())
+	{
+		os << body.getX() << endl;
+		os << body.getY() << endl;
+	}
+
+	return os;
+}
