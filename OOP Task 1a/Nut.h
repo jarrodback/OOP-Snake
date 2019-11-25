@@ -11,8 +11,8 @@ public:
 	bool has_been_collected() const;
 	void respawn();
 	void disappear();
-	int GetX();
-	int GetY();
+	int getX();
+	int getY();
 };
 
-ostream& operator<<(ostream& os, const Nut& nut);
+ostream& operator<<(ostream& os, Nut& nut);

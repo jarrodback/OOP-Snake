@@ -10,12 +10,11 @@ void Nut::disappear()
 	collected = true;
 }
 
-bool Nut::has_been_collected() { return collected; }
-int Nut::GetX()
+int Nut::getX()
 {
 	return x;
 }
-int Nut::GetY()
+int Nut::getY()
 {
 	return y;
 }
@@ -23,7 +22,7 @@ bool Nut::has_been_collected() const { return collected; }
 
 void Nut::respawn() { collected = false; }
 
-ostream& operator<<(ostream& os, const Nut& nut)
+ostream& operator<<(ostream& os, Nut& nut)
 {
 	if (nut.has_been_collected())
 	{
