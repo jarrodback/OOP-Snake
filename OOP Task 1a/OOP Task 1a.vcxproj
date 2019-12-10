@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{72456D60-753A-4C75-9C3B-BA8987E17990}</ProjectGuid>
     <RootNamespace>OOPTask1a</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -134,6 +134,7 @@
     <ClInclude Include="RandomNumberGenerator.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="Snake.h" />
+    <ClInclude Include="Tail.h" />
     <ClInclude Include="Underground.h" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +149,7 @@
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Tail.cpp" />
     <ClCompile Include="Underground.cpp" />
   </ItemGroup>
   <ItemGroup>

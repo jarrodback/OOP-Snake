@@ -23,30 +23,30 @@ private:
 	Player player;
 
 	void apply_rules();
-	int find_hole_number_at_position(int x, int y) const;
 
 public:
 	Game();
 	Game(string name);
-	void setup();
-	void setPosition();
-	void resetGame();
-	void processInput(int key);
+
 	vector<vector<char>> prepareGrid();
-	bool isRunning() const;
+
 	string get_end_reason() const;
 	string getPlayerName() const;
+	int getPlayerScore() const;
+	bool isCheatModeActive() const;
+	bool isRunning() const;
+
 	Mouse& getMouse();
 	Snake& getSnake();
 	Nut& getNut();
 	Player& getPlayer();
-	int getPlayerScore() const;
-	//void saveFile();
-	void cheatMode();
-	bool isCheatModeActive() const;
-	//Undo
+
+	void setup();
+	void setPosition();
+	void resetGame();
+	void processInput(int key);
 	void undo();
+	void cheatMode();
 };
 ostream& operator<<(ostream& os, Game& game);
 istream& operator>>(istream& is, Game& game);
-

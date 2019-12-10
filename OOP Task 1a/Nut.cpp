@@ -1,6 +1,6 @@
 #include "Nut.h"
 #include "Constants.h"
-Nut::Nut(int x, int y) :MoveableGridItem(NUT), collected(false)
+Nut::Nut() :MoveableGridItem(NUT), collected(false)
 {
 	randomisePosition();
 }
@@ -10,14 +10,6 @@ void Nut::disappear()
 	collected = true;
 }
 
-int Nut::getX()
-{
-	return x;
-}
-int Nut::getY()
-{
-	return y;
-}
 bool Nut::has_been_collected() const { return collected; }
 
 void Nut::respawn() { collected = false; }

@@ -10,15 +10,20 @@ protected:
 public:
 	MoveableGridItem(char symbol);
 	void update_position(int dx, int dy);
+	MoveableGridItem(char symbol, int x, int y);
 	bool is_at_position(int x, int y) const;
-	void SetX(int dx);
-	void SetY(int dy);
+
+	void randomisePosition();
+
+	//GetSet
+	void setX(int dx);
+	void setY(int dy);
 	int getX() const;
 	int getY() const;
-	void randomisePosition();
 	void setPrevX(int x);
 	void setPrevY(int y);
-	int getPrevX();
-	int getPrevY();
+	int getPrevX() const;
+	int getPrevY() const;
+	bool isOutOfBounds() const;
 
 };

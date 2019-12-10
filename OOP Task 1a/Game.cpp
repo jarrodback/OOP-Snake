@@ -1,46 +1,31 @@
 #include "Game.h"
-Game::Game() : nut(10, 5)
+Game::Game()
 {
-
 }
-Game::Game(string name) : nut(10, 5), player(name)
+Game::Game(string name) : player(name)
 {
 }
 void Game::setup()
 {
-	// set up the holes
-	underground.set_hole_no_at_position(0, 4, 3);
-	underground.set_hole_no_at_position(1, 15, 10);
-	underground.set_hole_no_at_position(2, 7, 15);
-
-	// mouse state already set up in its contructor
+	underground.populateHoles();
 	setPosition();
-	// set up snake
 	snake.spot_mouse(&mouse);
 }
 void Game::setPosition()
 {
 	mouse.randomisePosition();
-	while (mouse.is_at_position(snake.getSnake().at(0).getX(), snake.getSnake().at(0).getY())
-		|| mouse.is_at_position(nut.getX(), nut.getY())) {
+	while (mouse.is_at_position(snake.getX(), snake.getY()) || mouse.is_at_position(nut.getX(), nut.getY()))
 		mouse.randomisePosition();
-	}
-	while (nut.is_at_position(underground.get_hole_no(0).getX(), underground.get_hole_no(0).getY()) ||
-		nut.is_at_position(underground.get_hole_no(1).getX(), underground.get_hole_no(1).getY()) ||
-		nut.is_at_position(underground.get_hole_no(2).getX(), underground.get_hole_no(2).getY()) ||
-		nut.is_at_position(snake.getSnake().at(0).getX(), snake.getSnake().at(0).getY()) ||
-		nut.getX() >= 18 || nut.getX() <= 2 || nut.getY() >= 18 || nut.getY() <= 2)
-	{
+	while (underground.is_hole_at_position(nut.getX(), nut.getY()) || nut.is_at_position(snake.getX(), snake.getY()) || nut.isOutOfBounds())
 		nut.randomisePosition();
-	}
 }
 
-void Game::resetGame() {
+void Game::resetGame() 
+{
 	mouse.respawn();
 	nut.respawn();
 	nut.randomisePosition();
 	snake.resetSnake();
-	snake.position_at_random();
 	snake.spot_mouse(&mouse);
 	player.resetCheat();
 	setPosition();
@@ -67,48 +52,36 @@ vector<vector<char>> Game::prepareGrid()
 		// for each column
 		for (int col = 1; col <= SIZE; ++col)
 		{
-			bool tailFound = false;
-			int count = 0;
-			for (MoveableGridItem snakePart : snake.getSnake())
+			// is the nut at this position?
+			if (row == nut.getY() && col == nut.getX() && !nut.has_been_collected())
+				line.push_back(nut.getSymbol());
+			// is the snake at this position?
+			else if (row == snake.getY() && col == snake.getX())
+				line.push_back(snake.getSymbol());
+			// is the mouse at this position?
+			else if (row == mouse.getY() && col == mouse.getX())
+				line.push_back(mouse.getSymbol());
+			else
 			{
-				if (row == snakePart.getY() && col == snakePart.getX() && count > 0)
+				// is there a hole at this position?
+				if (underground.is_hole_at_position(col,row))
 				{
-					line.push_back(snakePart.getSymbol());
-					tailFound = true;
-				}
-				count++;
-			}
-			if (!tailFound)
-			{
-				// is the nut at this position?
-				if (row == nut.getY() && col == nut.getX() && !nut.has_been_collected())
-				{
-					line.push_back(nut.getSymbol());
-				}
-				// is the snake at this position?
-				else if (row == snake.getSnake().at(0).getY() && col == snake.getSnake().at(0).getX())
-				{
-					line.push_back(snake.getSnake().at(0).getSymbol());
-				}
-				// is the mouse at this position?
-				else if (row == mouse.getY() && col == mouse.getX())
-				{
-					line.push_back(mouse.getSymbol());
+					line.push_back(underground.getSymbol());
 				}
 				else
 				{
-					// is there a hole at this position?
-					const int hole_no = find_hole_number_at_position(col, row);
-
-					if (hole_no != -1)
+					bool tailFound = false;
+					for (Tail body : snake.getTail())
 					{
-						line.push_back(underground.get_hole_no(hole_no).getSymbol());
+						if (row == body.getY() && col == body.getX() && tailFound == false)
+						{
+							line.push_back(body.getSymbol());
+							tailFound = true;
+						}
 					}
-					else
-					{
-						// none of the above, must be nothing at this position
+					// none of the above, must be nothing at this position
+					if (!tailFound)
 						line.push_back(FREECELL);
-					}
 				}
 			}
 		}
@@ -120,32 +93,15 @@ vector<vector<char>> Game::prepareGrid()
 	return grid;
 }
 
-int Game::find_hole_number_at_position(int x, int y) const
+void Game::cheatMode()
 {
-	for (size_t h_no = 0; h_no < underground.getHoles().size(); ++h_no)
-	{
-		if (underground.get_hole_no(h_no).is_at_position(x, y))
-		{
-			return h_no;
-		}
-	}
-
-	return -1; // not a hole
-}
-
-void Game::cheatMode() {
 	snake.toggleImmbolise();
 	player.toggleCheat();
 }
 
 bool Game::isCheatModeActive() const
 {
-	if (player.isCheating()) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return player.isCheating();
 }
 
 void Game::apply_rules()
@@ -175,18 +131,7 @@ void Game::apply_rules()
 			mouse.escape_into_hole();
 		}
 		if (mouse.has_reached_a_hole(underground) && nut.has_been_collected() == false)
-		{
-			//move mouse to another hole
-			RandomNumberGenerator rng;
-			int hole = rng.get_random_value(3) - 1;
-			while (mouse.getX() == underground.get_hole_no(hole).getX() && mouse.getY() == underground.get_hole_no(hole).getY())
-			{
-				hole = rng.get_random_value(3) - 1;
-			}
-			mouse.SetX(underground.getHoles().at(hole).getX());
-			mouse.SetY(underground.getHoles().at(hole).getY());
-
-		}
+				mouse.teleport(underground);
 	}
 }
 
@@ -203,7 +148,8 @@ string Game::get_end_reason() const
 	return "The snake ate you!";
 }
 
-string Game::getPlayerName() const {
+string Game::getPlayerName() const 
+{
 	return player.getName();
 }
 
@@ -227,12 +173,11 @@ Player& Game::getPlayer()
 	return player;
 }
 
-int Game::getPlayerScore() const {
+int Game::getPlayerScore() const 
+{
 	return player.getScore();
 }
-//TODO
-// does mouse have nut?
-//
+
 ostream& operator<<(ostream& os, Game& game)
 {
 	os << game.getPlayer(); // save player
@@ -259,8 +204,8 @@ istream& operator>>(istream& is, Game& game)
 		int mouseX, mouseY;
 		is >> mouseX;
 		is >> mouseY;
-		game.getMouse().SetX(mouseX);
-		game.getMouse().SetY(mouseY);
+		game.getMouse().setX(mouseX);
+		game.getMouse().setY(mouseY);
 
 		string nutCollected;
 		is >> nutCollected;
@@ -269,18 +214,26 @@ istream& operator>>(istream& is, Game& game)
 			int nutX, nutY;
 			is >> nutX;
 			is >> nutY;
-			game.getNut().SetX(nutX);
-			game.getNut().SetY(nutY);
+			game.getNut().setX(nutX);
+			game.getNut().setY(nutY);
+		}
+		else
+		{
+			game.getNut().disappear();
 		}
 		int snakeSize;
 		is >> snakeSize;
+		int snakeX, snakeY;
+		is >> snakeX;
+		is >> snakeY;
+		game.getSnake().setX(snakeX);
+		game.getSnake().setY(snakeY);
 		for (int x = 0; x < snakeSize; x++)
 		{
-			int snakeX, snakeY;
 			is >> snakeX;
 			is >> snakeY;
-			game.getSnake().getSnake().at(x).SetX(snakeX);
-			game.getSnake().getSnake().at(x).SetY(snakeY);
+			game.getSnake().getTail().at(x).setX(snakeX);
+			game.getSnake().getTail().at(x).setY(snakeY);
 		}
 	}
 
@@ -292,30 +245,23 @@ void Game::undo()
 {
 	if (mouse.getDirectionX() != NULL || mouse.getDirectionY() != NULL)
 	{
-		mouse.SetX(mouse.getPrevX());
-		mouse.SetY(mouse.getPrevY());
+		mouse.setX(mouse.getPrevX());
+		mouse.setY(mouse.getPrevY());
 	}
 	if (nut.getPrevX() != NULL || nut.getPrevY() != NULL)
 	{
 		if (nut.has_been_collected() == true)
 		{
 			nut.respawn();
-			nut.SetX(nut.getPrevX());
-			nut.SetY(nut.getPrevY());
+			nut.setX(nut.getPrevX());
+			nut.setY(nut.getPrevY());
 		}
 		else
 		{
-			nut.SetX(nut.getPrevX());
-			nut.SetY(nut.getPrevY());
+			nut.setX(nut.getPrevX());
+			nut.setY(nut.getPrevY());
 		}
 	}
-	for (MoveableGridItem& body : snake.getSnake())
-	{
-		if ((body.getPrevX() > 0 || body.getPrevY() > 0))
-		{
-			body.SetX(body.getPrevX());
-			body.SetY(body.getPrevY());
-		}
-	}
+	snake.undo();
 }
 

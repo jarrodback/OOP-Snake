@@ -1,51 +1,27 @@
 #include "Mouse.h"
 
-Mouse::Mouse() : MoveableGridItem(MOUSE), alive(true), escaped(false), mouse_dx(0), mouse_dy(0) 
+Mouse::Mouse() : MoveableGridItem(MOUSE), alive(true), escaped(false), mouse_dx(0), mouse_dy(0)
 {
-	x = (SIZE/2);
+	x = (SIZE / 2);
 	y = (SIZE / 2);
 }
 
-int Mouse::getDirectionX() const
-{
-	return mouse_dx;
-}
-
-int Mouse::getDirectionY() const
-{
-	return mouse_dy;
-}
-
+int Mouse::getDirectionX() const { return mouse_dx; }
+int Mouse::getDirectionY() const { return mouse_dy; }
 bool Mouse::is_alive() const { return alive; }
+bool Mouse::has_escaped() const { return escaped; }
+bool Mouse::has_reached_a_hole(Underground ug) const { return ug.is_hole_at_position(x, y); }
+bool Mouse::has_reached_nut(Nut nut) const { return is_at_position(nut.getX(), nut.getY()); }
+void Mouse::escape_into_hole() { escaped = true; }
+void Mouse::die() { alive = false; }
+void Mouse::teleport(Underground ug) { ug.moveToAnotherHole(x, y); }
+
 
 void Mouse::respawn() {
 	alive = true;
 	escaped = false;
 	x = (SIZE / 2);
 	y = (SIZE / 2);
-}
-
-bool Mouse::has_escaped() const { return escaped; }
-
-bool Mouse::has_reached_a_hole(Underground ug) const
-{
-	for (int h_no = 0; h_no < (int)ug.getHoles().size(); ++h_no)
-		if (is_at_position(ug.getHoles().at(h_no).getX(), ug.getHoles().at(h_no).getY()))
-			return true;
-	return false;
-}
-bool Mouse::has_reached_nut(Nut nut) const
-{
-	if(is_at_position(nut.getX(), nut.getY()))
-		return true;
-}
-void Mouse::die()
-{
-	alive = false;
-}
-void Mouse::escape_into_hole()
-{
-	escaped = true;
 }
 
 void Mouse::scamper(int key)
@@ -87,8 +63,7 @@ ostream& operator<<(ostream& os, const Mouse& mouse)
 		os << mouse.getY() << endl;
 	}
 	else
-	{
 		os << "mouse_dead" << endl;
-	}
 	return os;
 }
+//nice

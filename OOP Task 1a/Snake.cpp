@@ -5,35 +5,26 @@
 
 RandomNumberGenerator Snake::rng;
 
-Snake::Snake()
-//calls default
+Snake::Snake() : MoveableGridItem(SNAKEHEAD, 0, 0)
 {
-	createSnake();
 	position_at_random();
-	// make the pointer safe before the snake spots the mouse
+	createTail();
 	p_mouse = nullptr;
 }
-Snake::~Snake()
-{
 
-}
-vector<MoveableGridItem>& Snake::getSnake()
-{
-	return snakeBody;
-}
 bool Snake::has_caught_mouse() const
 {
-	for (MoveableGridItem snakePart : snakeBody)
-		if (snakePart.is_at_position(p_mouse->getX(), p_mouse->getY()))
+	if (is_at_position(p_mouse->getX(), p_mouse->getY()))
+		return true;
+	for (Tail body : snakeBody)
+		if (body.is_at_position(p_mouse->getX(), p_mouse->getY()))
 			return true;
 	return false;
 }
 
 void Snake::spot_mouse(Mouse* p_mouse)
 {
-	// pre-condition: the mouse needs to exist 
 	assert(p_mouse != nullptr);
-
 	this->p_mouse = p_mouse;
 }
 
@@ -41,80 +32,92 @@ void Snake::chase_mouse()
 {
 	int snake_dx, snake_dy;
 
-	//identify direction of travel
 	set_direction(snake_dx, snake_dy);
 
-	//go in that direction
-	bool collision = false;
-	for (MoveableGridItem body : snakeBody)
+	//Will the snake head hit the body
+	bool tailCollision = false;
+	for (Tail body : snakeBody)
+		if (body.is_at_position(x + snake_dx, y + snake_dy))
+			tailCollision = true;
+
+	//If not immbolised and snakehead can move
+	if (!immoblised && !tailCollision)
 	{
-		if (body.is_at_position(snakeBody.at(0).getX() + snake_dx, snakeBody.at(0).getY() + snake_dy))
+		for (int i = snakeBody.size()-1; i > 0; i--)
 		{
-			collision = true;
+			snakeBody.at(i).setPrevX(snakeBody.at(i).getX());
+			snakeBody.at(i).setPrevY(snakeBody.at(i).getY());
+			snakeBody.at(i).setX(snakeBody.at(i - 1).getX());
+			snakeBody.at(i).setY(snakeBody.at(i - 1).getY());
 		}
-	}
-	if (!immoblised && collision == false) {
-		for (int x = snakeBody.size() - 1; x > 0; x--)
-		{
-			snakeBody.at(x).setPrevX(snakeBody.at(x).getX());
-			snakeBody.at(x).setPrevY(snakeBody.at(x).getY());
-			snakeBody.at(x).SetX(snakeBody.at(x - 1).getX());
-			snakeBody.at(x).SetY(snakeBody.at(x - 1).getY());
-		}
-		snakeBody.at(0).update_position(snake_dx, snake_dy);
+		snakeBody.at(0).setPrevX(snakeBody.at(0).getX());
+		snakeBody.at(0).setPrevY(snakeBody.at(0).getY());
+		snakeBody.at(0).setX(x);
+		snakeBody.at(0).setY(y);
+		update_position(snake_dx, snake_dy);
 	}
 }
 
-void Snake::resetSnake() {
+void Snake::resetSnake()
+{
+	//Reset snake to start phase
 	immoblised = false;
 	snakeBody.clear();
-	createSnake();
+	position_at_random();
+	createTail();
 }
 
 void Snake::set_direction(int& dx, int& dy) const
 {
-	// pre-condition: The snake needs to know where the mouse is 
 	assert(p_mouse != nullptr);
-
-	// assume snake only moves when necessary
 	dx = 0; dy = 0;
-
-	// update coordinate if necessary
 	if (!immoblised) {
-		if (snakeBody.at(0).getX() < p_mouse->getX())         // if snake on left of mouse
-			dx = 1;                        // snake should move right
-		else if (snakeBody.at(0).getX() > p_mouse->getX())    // if snake on left of mouse
-			dx = -1;						       // snake should move left
+		if (x < p_mouse->getX())
+			dx = 1;
+		else if (x > p_mouse->getX())
+			dx = -1;
 
-		if (snakeBody.at(0).getY() < p_mouse->getY())         // if snake is above mouse
-			dy = 1;                        // snake should move down
-		else if (snakeBody.at(0).getY() > p_mouse->getY())    // if snake is below mouse
-			dy = -1;						       // snake should move up
+		if (y < p_mouse->getY())
+			dy = 1;
+		else if (y > p_mouse->getY())
+			dy = -1;
 	}
 }
-void Snake::createSnake()
+void Snake::createTail()
 {
-	snakeBody.push_back(MoveableGridItem(SNAKEHEAD));
-	for (int x = 0; x < 3; x++)
-	{
-		snakeBody.push_back(MoveableGridItem(SNAKETAIL));
-	}
+	for (int i = 0; i < 3; i++)
+		snakeBody.push_back(Tail(x, y));
+}
+vector<Tail> Snake::getTail() const
+{
+	return snakeBody;
 }
 void Snake::position_at_random()
 {
-	// WARNING: this may place on top of other things
-	int x = rng.get_random_value(SIZE);
-	int y = rng.get_random_value(SIZE);
-	snakeBody.at(0).SetX(x);
-	snakeBody.at(0).SetY(y);
+	x = rng.get_random_value(SIZE);
+	y = rng.get_random_value(SIZE);
 }
-void Snake::toggleImmbolise() {
+void Snake::toggleImmbolise()
+{
 	immoblised = !immoblised;
+}
+void Snake::undo()
+{
+	x = prevX;
+	y = prevY;
+	for (Tail& body : snakeBody)
+		if (body.getPrevX() >= 0 && body.getPrevY() >= 0)
+		{
+			body.setX(body.getPrevX());
+			body.setY(body.getPrevY());
+		}
 }
 ostream& operator<<(ostream& os, Snake& snake)
 {
-	os << snake.getSnake().size() << endl;
-	for (MoveableGridItem& body : snake.getSnake())
+	os << snake.getTail().size() << endl;
+	os << snake.getX() << endl;
+	os << snake.getY() << endl;
+	for (Tail& body : snake.getTail())
 	{
 		os << body.getX() << endl;
 		os << body.getY() << endl;

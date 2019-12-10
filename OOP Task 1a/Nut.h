@@ -7,12 +7,10 @@ class Nut : public MoveableGridItem
 private:
 	bool collected;
 public:
-	Nut(int x, int y);
+	Nut();
 	bool has_been_collected() const;
 	void respawn();
 	void disappear();
-	int getX();
-	int getY();
 };
 
 ostream& operator<<(ostream& os, Nut& nut);
