@@ -1,6 +1,8 @@
 #include "RandomNumberGenerator.h" 
 #include <ctime>
 
+RandomNumberGenerator* RandomNumberGenerator::instance = new RandomNumberGenerator();
+
 RandomNumberGenerator::RandomNumberGenerator()
 {
 	seed();
@@ -10,6 +12,11 @@ int RandomNumberGenerator::get_random_value(int max) const
 {
 	// produce a random number in range [1..max]
 	return (rand() % max) + 1;
+}
+
+RandomNumberGenerator* RandomNumberGenerator::getInstance()
+{
+	return instance;
 }
 
 void RandomNumberGenerator::seed()

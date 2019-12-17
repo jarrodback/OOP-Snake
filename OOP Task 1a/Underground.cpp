@@ -1,13 +1,4 @@
 #include "Underground.h"
-
-Hole::Hole() : FixedGridItem(HOLE)
-{
-
-}
-Hole::Hole(int x, int y) : FixedGridItem(HOLE, x, y)
-{
-}
-
 // number of holes in underground
 static const int MAXHOLES(3);
 
@@ -62,13 +53,12 @@ char Underground::getSymbol() const
 
 void Underground::moveToAnotherHole(int& x, int& y)
 {
-	RandomNumberGenerator rng;
 	int holeX = x;
 	int holeY = y;
-	int holeNum = rng.get_random_value(3) - 1;
+	int holeNum = RandomNumberGenerator::getInstance()->get_random_value(3) - 1;
 	while (holes.at(holeNum).is_at_position(holeX, holeY))
 	{
-		holeNum = rng.get_random_value(3) - 1;
+		holeNum = RandomNumberGenerator::getInstance()->get_random_value(3) - 1;
 	}
 	x = holes.at(holeNum).getX();
 	y = holes.at(holeNum).getY();

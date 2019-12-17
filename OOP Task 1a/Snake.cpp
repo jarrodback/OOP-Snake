@@ -1,9 +1,6 @@
 #include "Snake.h"
 #include "Constants.h"
 #include "Mouse.h"
-#include "RandomNumberGenerator.h"
-
-RandomNumberGenerator Snake::rng;
 
 Snake::Snake() : MoveableGridItem(SNAKEHEAD, 0, 0)
 {
@@ -94,8 +91,8 @@ vector<Tail> Snake::getTail() const
 }
 void Snake::position_at_random()
 {
-	x = rng.get_random_value(SIZE);
-	y = rng.get_random_value(SIZE);
+	x = RandomNumberGenerator::getInstance()->get_random_value(SIZE);
+	y = RandomNumberGenerator::getInstance()->get_random_value(SIZE);
 }
 void Snake::toggleImmbolise()
 {

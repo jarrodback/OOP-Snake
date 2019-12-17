@@ -9,13 +9,10 @@ using namespace std;
 class RandomNumberGenerator
 {
 	public:
-		// constructors
-		RandomNumberGenerator();
-
-		// accessors
 		int get_random_value(int) const;
-
+		static RandomNumberGenerator* getInstance();
 	private:
-		// supporting functions
 		void seed();
+		RandomNumberGenerator();
+		static RandomNumberGenerator* instance;
 };

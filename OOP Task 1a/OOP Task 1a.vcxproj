@@ -127,6 +127,7 @@
     <ClInclude Include="FixedGridItem.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GridItem.h" />
+    <ClInclude Include="Hole.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Nut.h" />
     <ClInclude Include="MoveableGridItem.h" />
@@ -141,6 +142,7 @@
     <ClCompile Include="FixedGridItem.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GridItem.cpp" />
+    <ClCompile Include="Hole.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Nut.cpp" />
     <ClCompile Include="MoveableGridItem.cpp" />

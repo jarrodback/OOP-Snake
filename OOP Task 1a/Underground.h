@@ -3,18 +3,9 @@
 #include "FixedGridItem.h"
 #include <cassert>
 #include <vector>
-#include "constants.h"
 #include "Nut.h"
-
+#include "Hole.h"
 using namespace std;
-
-class Hole : public FixedGridItem
-{
-public:
-	Hole();
-	// constructors
-	Hole(int x, int y);
-};
 
 class Underground
 {
